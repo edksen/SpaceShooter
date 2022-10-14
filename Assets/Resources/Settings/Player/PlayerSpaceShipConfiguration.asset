@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20469b241787428b84e3543221114613, type: 3}
+  m_Name: PlayerSpaceShipConfiguration
+  m_EditorClassIdentifier: 
+  GasForce: 3
+  MaxSpeed: 25
+  RotationSpeed: 360
+  Inertia: 2.12
+  ShipBorderState: 1
+  ShipOrdinaryProjectile: {fileID: 2675265683028936128, guid: f457bae42959e334781b4cee35d73f5b, type: 3}
+  ShipLaserProjectile: {fileID: 2675265683028936128, guid: 8a1c35a690e2b484fa653d6493e55d66, type: 3}
