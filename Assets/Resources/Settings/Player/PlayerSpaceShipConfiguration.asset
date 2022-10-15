@@ -17,5 +17,5 @@ MonoBehaviour:
   RotationSpeed: 360
   Inertia: 2.12
   ShipBorderState: 1
-  ShipOrdinaryProjectile: {fileID: 2675265683028936128, guid: f457bae42959e334781b4cee35d73f5b, type: 3}
-  ShipLaserProjectile: {fileID: 2675265683028936128, guid: 8a1c35a690e2b484fa653d6493e55d66, type: 3}
+  shipOrdinaryProjectile: {fileID: 2675265683028936128, guid: f457bae42959e334781b4cee35d73f5b, type: 3}
+  shipLaserProjectile: {fileID: 2675265683028936128, guid: 8a1c35a690e2b484fa653d6493e55d66, type: 3}

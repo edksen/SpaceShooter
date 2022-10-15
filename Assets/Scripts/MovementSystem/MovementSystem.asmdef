@@ -1,0 +1,17 @@
+{
+    "name": "MovementSystem",
+    "rootNamespace": "",
+    "references": [
+        "GUID:463f9e91aec88464895967316f533e89",
+        "GUID:ea715009a4efd4c6cbc85be3ae097dd3"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
