@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace SpaceShooter.Controllers
+namespace SpaceShooter.MovingSystem.Contracts
 {
     public interface IMovementController
     {

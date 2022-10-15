@@ -1,5 +1,5 @@
 ﻿using SpaceShooter.ArmorSystem;
-using SpaceShooter.Controllers;
+using SpaceShooter.MovingSystem;
 using UnityEngine;
 
 namespace SpaceShooter.GameCore.Configuration

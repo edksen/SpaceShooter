@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using SpaceShooter.ArmorSystem;
 using SpaceShooter.ArmorSystem.Contracts;
-using SpaceShooter.Controllers;
 using SpaceShooter.Entities;
 using SpaceShooter.GameCore.Configuration;
+using SpaceShooter.MovingSystem;
+using SpaceShooter.MovingSystem.Contracts;
 using UnityEngine;
 
 namespace SpaceShooter.GameCore

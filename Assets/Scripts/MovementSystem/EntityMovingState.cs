@@ -1,4 +1,4 @@
-﻿namespace SpaceShooter.Controllers
+﻿namespace SpaceShooter.MovingSystem
 {
     public enum EntityMovingState
     {

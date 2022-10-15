@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections;
-using Controllers.EntityControllers;
 using SpaceShooter.Entities;
+using SpaceShooter.MovingSystem.Contracts;
 using Unity.VisualScripting;
 using UnityEngine;
 using Quaternion = UnityEngine.Quaternion;
 
-namespace SpaceShooter.Controllers
+namespace SpaceShooter.MovingSystem
 {
     public class EntityMovementController : IMovementController
     {

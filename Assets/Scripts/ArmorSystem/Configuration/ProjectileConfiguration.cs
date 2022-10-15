@@ -1,4 +1,4 @@
-﻿using SpaceShooter.Controllers;
+﻿using SpaceShooter.MovingSystem;
 using UnityEngine;
 
 namespace SpaceShooter.ArmorSystem.Settings

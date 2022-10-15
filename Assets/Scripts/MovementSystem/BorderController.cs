@@ -1,6 +1,6 @@
 ﻿using System;
-using SpaceShooter.Controllers;
-using SpaceShooter.Entities;
+using SpaceShooter.MovingSystem;
+using SpaceShooter.MovingSystem.Contracts;
 using UnityEngine;
 using Random = UnityEngine.Random;
 

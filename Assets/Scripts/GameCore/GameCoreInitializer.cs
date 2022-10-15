@@ -2,6 +2,8 @@
 using SpaceShooter.ArmorSystem;
 using SpaceShooter.ArmorSystem.Contracts;
 using SpaceShooter.Controllers;
+using SpaceShooter.MovingSystem;
+using SpaceShooter.MovingSystem.Contracts;
 using UnityEngine;
 using UnityEngine.InputSystem;
 

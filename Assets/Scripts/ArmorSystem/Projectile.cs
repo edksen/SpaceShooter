@@ -1,7 +1,8 @@
 ﻿using System;
 using SpaceShooter.ArmorSystem.Settings;
-using SpaceShooter.Controllers;
 using SpaceShooter.Entities;
+using SpaceShooter.MovingSystem;
+using SpaceShooter.MovingSystem.Contracts;
 using UnityEngine;
 
 namespace SpaceShooter.ArmorSystem

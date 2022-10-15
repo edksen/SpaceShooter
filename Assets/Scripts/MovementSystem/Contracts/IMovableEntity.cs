@@ -1,7 +1,6 @@
-﻿using SpaceShooter.Controllers;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace SpaceShooter.Entities
+namespace SpaceShooter.MovingSystem.Contracts
 {
     public interface IMovableEntity
     {

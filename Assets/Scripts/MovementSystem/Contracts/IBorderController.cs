@@ -1,7 +1,7 @@
 ﻿using SpaceShooter.Entities;
 using UnityEngine;
 
-namespace Controllers.EntityControllers
+namespace SpaceShooter.MovingSystem.Contracts
 {
     public interface IBorderController
     {

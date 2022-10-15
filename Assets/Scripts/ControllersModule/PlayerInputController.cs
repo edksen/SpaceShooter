@@ -1,5 +1,6 @@
 ﻿using SpaceShooter.ArmorSystem;
 using SpaceShooter.ArmorSystem.Contracts;
+using SpaceShooter.MovingSystem.Contracts;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
