@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: LaserArmorPlayer
   m_EditorClassIdentifier: 
   ArmorType: 0
-  Projectile: {fileID: 0}
-  AttackRate: 0
-  RechargeRateInSecs: 0
-  AmmoCapacity: 0
+  Projectile: {fileID: 2675265683028936128, guid: 8a1c35a690e2b484fa653d6493e55d66, type: 3}
+  AttackRate: 1
+  RechargeRateInSecs: 30
+  AmmoCapacity: 3
