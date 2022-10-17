@@ -1,7 +1,7 @@
-﻿using SpaceShooter.AIModule.Contracts;
+﻿using MovementSystem.Contracts;
+using SpaceShooter.AIModule.Contracts;
 using SpaceShooter.ArmorSystem;
 using SpaceShooter.ArmorSystem.Contracts;
-using SpaceShooter.MovingSystem.Contracts;
 using UnityEngine;
 
 namespace SpaceShooter.AIModule
@@ -11,10 +11,10 @@ namespace SpaceShooter.AIModule
         private const AIMovingType MOVING_TYPE = AIMovingType.Random;
         public AIMovingType MovingType => MOVING_TYPE;
         
-        private IMovementController _movementController;
+        private MovementControllerBase _movementController;
         private IArmoryController _armorController;
         
-        public AIRandomMovingEntity(IMovementController movementController, IArmoryController armoryController)
+        public AIRandomMovingEntity(MovementControllerBase movementController, IArmoryController armoryController)
         {
             _movementController = movementController;
             _armorController = armoryController;

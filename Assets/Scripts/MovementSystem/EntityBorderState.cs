@@ -1,4 +1,4 @@
-﻿namespace SpaceShooter.MovingSystem
+﻿namespace MovementSystem
 {
     public enum EntityBorderState
     {

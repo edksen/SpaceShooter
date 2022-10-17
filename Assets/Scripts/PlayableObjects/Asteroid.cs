@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using MovementSystem;
+using MovementSystem.Contracts;
 using SpaceShooter.ArmorSystem.Contracts;
 using SpaceShooter.ArmorSystem.Settings;
 using SpaceShooter.Entities;
-using SpaceShooter.MovingSystem;
-using SpaceShooter.MovingSystem.Contracts;
 using SpaceShooter.PlayableObjects.Configuration;
 using UnityEngine;
 

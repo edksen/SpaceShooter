@@ -1,5 +1,4 @@
-﻿using Controllers.EntityControllers;
-using SpaceShooter.MovingSystem;
+﻿using MovementSystem;
 using UnityEngine;
 
 namespace SpaceShooter.ArmorSystem.Contracts
@@ -26,8 +25,8 @@ namespace SpaceShooter.ArmorSystem.Contracts
             {
                 var projectile = Object.Instantiate(_projectile);
                 projectile.transform.SetPositionAndRotation(_armorTransform.position, _armorTransform.rotation);
-                var movementController = new EntityMovementController(projectile, new BorderController());
-                movementController.MoveEntity(Random.insideUnitCircle.normalized, true);
+                var movementController = new RegularEntityMovementController(projectile, new BorderController());
+                movementController.MoveEntity(Random.insideUnitCircle.normalized);
             }
         }
     }

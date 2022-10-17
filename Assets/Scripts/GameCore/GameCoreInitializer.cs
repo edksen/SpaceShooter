@@ -1,13 +1,11 @@
-﻿using System;
-using Controllers.EntityControllers;
+﻿using MovementSystem;
+using MovementSystem.Contracts;
 using SpaceShooter.AIModule;
 using SpaceShooter.AIModule.Configuration;
 using SpaceShooter.AIModule.Contracts;
 using SpaceShooter.ArmorSystem;
 using SpaceShooter.ArmorSystem.Contracts;
 using SpaceShooter.Controllers;
-using SpaceShooter.MovingSystem;
-using SpaceShooter.MovingSystem.Contracts;
 using SpaceShooter.PlayableObjects;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -48,7 +46,7 @@ namespace SpaceShooter.GameCore
         private SpaceShip CreatePlayer()
         {
             SpaceShip playerEntity = Instantiate(_shipPrefab);
-            IMovementController movementController = new EntityMovementController(playerEntity, _borderController);
+            InertialEntityMovementController movementController = new InertialEntityMovementController(playerEntity, _borderController);
 
             movementController.OnPositionChanged += _aiController.ChaseEnemy;
 

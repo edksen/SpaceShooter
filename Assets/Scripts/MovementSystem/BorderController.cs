@@ -1,10 +1,9 @@
 ﻿using System;
-using SpaceShooter.MovingSystem;
-using SpaceShooter.MovingSystem.Contracts;
+using MovementSystem.Contracts;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace Controllers.EntityControllers
+namespace MovementSystem
 {
     public class BorderController : IBorderController
     {
@@ -35,6 +34,12 @@ namespace Controllers.EntityControllers
                 default:
                     break;
             }
+        }
+
+        public Vector2 GetRandomPointInBorder()
+        {
+            var randomPoint = Random.insideUnitCircle;
+            return randomPoint * _stageDimensions;
         }
 
         private bool InBorders(IMovableEntity movableEntity)

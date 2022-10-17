@@ -1,6 +1,6 @@
-﻿using SpaceShooter.ArmorSystem;
+﻿using MovementSystem.Contracts;
+using SpaceShooter.ArmorSystem;
 using SpaceShooter.ArmorSystem.Contracts;
-using SpaceShooter.MovingSystem.Contracts;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,11 +8,11 @@ namespace SpaceShooter.Controllers
 {
     public class PlayerInputController
     {
-        private IMovementController _shipMovementController;
+        private MovementControllerBase _shipMovementController;
         private IArmoryController _shipArmoryController;
 
         public PlayerInputController(
-            IMovementController shipMovementController, 
+            MovementControllerBase shipMovementController, 
             IArmoryController shipArmoryController, 
             PlayerInput playerInput)
         {

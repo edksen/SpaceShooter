@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
+using MovementSystem;
 using SpaceShooter.ArmorSystem.Settings;
-using SpaceShooter.MovingSystem;
 using UnityEngine;
 
 namespace SpaceShooter.PlayableObjects.Configuration

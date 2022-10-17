@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e69bdf310c094886b50673d2ef524c2d, type: 3}
   m_Name: AsteroidConfiguration
   m_EditorClassIdentifier: 
-  MaxSpeed: 10
+  MaxSpeed: 0.01
   GasForce: 2
   RotationSpeed: 10
   AsteroidBorderState: 3

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace SpaceShooter.MovingSystem.Contracts
+namespace MovementSystem.Contracts
 {
     public interface IMovableEntity
     {

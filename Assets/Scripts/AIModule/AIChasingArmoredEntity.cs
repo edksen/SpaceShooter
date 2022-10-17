@@ -1,8 +1,7 @@
-﻿using System;
+﻿using MovementSystem.Contracts;
 using SpaceShooter.AIModule.Contracts;
 using SpaceShooter.ArmorSystem;
 using SpaceShooter.ArmorSystem.Contracts;
-using SpaceShooter.MovingSystem.Contracts;
 using UnityEngine;
 
 namespace SpaceShooter.AIModule
@@ -13,22 +12,25 @@ namespace SpaceShooter.AIModule
         public AIMovingType MovingType => MOVING_TYPE;
 
         private Transform _entityTransform;
-        private IMovementController _movementController;
+        private Vector3 _relativePosition;
+        private MovementControllerBase _movementController;
         private IArmoryController _armorController;
+        private Vector2 _enemyPosition;
         
         private ArmorType AIEntityArmorType => ArmorType.Bullet;
 
-        public AIChasingArmoredEntity(IMovementController movementController, IArmoryController armoryController, Transform entityTransform)
+        public AIChasingArmoredEntity(MovementControllerBase movementController, IArmoryController armoryController, Transform entityTransform, Vector3 relativePosition)
         {
             _entityTransform = entityTransform;
             _movementController = movementController;
             _armorController = armoryController;
+            _relativePosition = relativePosition;
         }
 
         public void Run(Vector2 position)
         {
-            var direction = ((Vector2) _entityTransform.position - position).normalized;
-            _movementController.MoveEntity(direction);
+            _enemyPosition = position;
+            var direction = Chase();
             
             if(direction == (Vector2) _entityTransform.up)
                 _armorController.MakeShot(AIEntityArmorType);
@@ -39,6 +41,14 @@ namespace SpaceShooter.AIModule
             _entityTransform = null;
             _movementController = null;
             _armorController = null;
+        }
+
+        private Vector2 Chase()
+        {
+            var direction = (_enemyPosition - (Vector2)_entityTransform.TransformPoint(_relativePosition)).normalized;
+            _movementController.MoveEntity(direction);
+
+            return direction;
         }
     }
 }
