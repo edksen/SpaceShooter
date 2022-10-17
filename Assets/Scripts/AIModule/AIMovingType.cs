@@ -2,7 +2,7 @@
 {
     public enum AIMovingType
     {
-        Chasing,
-        Random
+        Random = 0,
+        Chasing = 1
     }
 }

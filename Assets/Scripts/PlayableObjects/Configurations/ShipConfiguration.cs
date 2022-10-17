@@ -1,8 +1,9 @@
-﻿using SpaceShooter.ArmorSystem;
+﻿using System.Collections.Generic;
+using SpaceShooter.ArmorSystem.Settings;
 using SpaceShooter.MovingSystem;
 using UnityEngine;
 
-namespace SpaceShooter.GameCore.Configuration
+namespace SpaceShooter.PlayableObjects.Configuration
 {
     [CreateAssetMenu(fileName = "ShipConfiguration", menuName = "Ship Configuration", order = 0)]
     public class ShipConfiguration : ScriptableObject
@@ -13,7 +14,6 @@ namespace SpaceShooter.GameCore.Configuration
         public float Inertia;
         public EntityBorderState ShipBorderState;
 
-        public Projectile shipOrdinaryProjectile;
-        public Projectile shipLaserProjectile;
+        public List<ArmorConfiguration> ArmorConfigurations;
     }
 }

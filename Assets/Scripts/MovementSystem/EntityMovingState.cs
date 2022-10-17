@@ -2,7 +2,7 @@
 {
     public enum EntityMovingState
     {
-        Idle,
-        Moving
+        Idle = 0,
+        Moving = 1
     }
 }

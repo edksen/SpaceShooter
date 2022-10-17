@@ -1,11 +1,14 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
+using SpaceShooter.ArmorSystem.Settings;
+using UnityEngine;
 
 namespace SpaceShooter.ArmorSystem.Contracts
 {
     public interface IArmoredEntity
     {
-        List<Armor> Armors { get; }
-
-        void SetArmor(List<Armor> armors);
+        List<ArmorConfiguration> Armors { get; }
+        
+        Transform ArmorTransform { get; }
     }
 }

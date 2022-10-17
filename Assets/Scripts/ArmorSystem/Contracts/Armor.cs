@@ -10,6 +10,7 @@ namespace SpaceShooter.ArmorSystem.Contracts
         protected readonly Transform _armorTransform;
 
         public ArmorType ArmorType => _armorType;
+        public abstract int AmmoLeft { get; }
         
         protected Armor(Projectile projectile, Transform armorTransform, ArmorType armorType)
         {
@@ -18,9 +19,6 @@ namespace SpaceShooter.ArmorSystem.Contracts
             _armorTransform = armorTransform;
         }
 
-        public virtual void MakeShot()
-        {
-            Object.Instantiate(_projectile, _armorTransform);
-        }
+        internal abstract void MakeShot();
     }
 }

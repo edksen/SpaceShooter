@@ -9,7 +9,6 @@ namespace SpaceShooter.ArmorSystem.Settings
         public float MaxSpeed;
         public float Inertia;
         public int LifeTimeSec;
-        public float CooldownRate;
         public EntityBorderState BorderState;
     }
 }

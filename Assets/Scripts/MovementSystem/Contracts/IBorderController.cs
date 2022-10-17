@@ -1,5 +1,4 @@
-﻿using SpaceShooter.Entities;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace SpaceShooter.MovingSystem.Contracts
 {

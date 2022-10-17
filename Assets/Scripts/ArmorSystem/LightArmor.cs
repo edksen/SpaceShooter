@@ -1,15 +1,19 @@
-﻿using Controllers.EntityControllers;
+﻿using System;
+using Controllers.EntityControllers;
 using SpaceShooter.ArmorSystem.Contracts;
 using SpaceShooter.MovingSystem;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace SpaceShooter.ArmorSystem
 {
     public class LightArmor : Armor
     {
-        public LightArmor(Projectile projectile, Transform armorPosition) : base(projectile, armorPosition, ArmorType.Direct){}
+        public override int AmmoLeft => Int32.MaxValue;
+        
+        public LightArmor(Projectile projectile, Transform armorPosition) : base(projectile, armorPosition, ArmorType.Bullet){}
 
-        public override void MakeShot()
+        internal override void MakeShot()
         {
             Projectile projectile = Object.Instantiate(_projectile);
             projectile.Transform.SetPositionAndRotation(_armorTransform.position, _armorTransform.rotation);

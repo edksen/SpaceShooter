@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using SpaceShooter.ArmorSystem.Contracts;
 using SpaceShooter.ArmorSystem.Settings;
 using SpaceShooter.Entities;
 using SpaceShooter.MovingSystem;

@@ -10,6 +10,8 @@ namespace SpaceShooter.MovingSystem
 {
     public class EntityMovementController : IMovementController
     {
+        public event Action<Vector2> OnPositionChanged; 
+        
         private IBorderController _borderController;
         private IMovableEntity _movableEntity;
         
@@ -64,6 +66,7 @@ namespace SpaceShooter.MovingSystem
                 yield return new WaitForFixedUpdate();
                 _currentDirection += _movableEntity.Inertia * Time.fixedDeltaTime * (_movementDirection - _currentDirection);
                 CalculateNewPosition();
+                OnPositionChanged?.Invoke(_movableEntity.Transform.position);
                 
             } while (_currentDirection != Vector2.zero);
 
@@ -77,6 +80,7 @@ namespace SpaceShooter.MovingSystem
                 yield return new WaitForNextFrameUnit();
                 _currentDirection += _movementDirection - _currentDirection;
                 CalculateNewPosition();
+                OnPositionChanged?.Invoke(_movableEntity.Transform.position);
                 
             } while (_currentDirection != Vector2.zero);
 
@@ -89,7 +93,7 @@ namespace SpaceShooter.MovingSystem
             float z = rotation.eulerAngles.z;
             z -= _currentDirection.x * _movableEntity.RotationSpeed * Time.deltaTime;
             rotation = Quaternion.Euler(0, 0, z);
-            _movableEntity.Transform.rotation = Quaternion.Slerp(rotation, rotation, 1);
+            _movableEntity.Transform.rotation = rotation;
 
             _currentSpeed = Math.Abs(_currentDirection.y) * (_currentSpeed + _movableEntity.GasForce * Time.deltaTime);
             _currentSpeed = Math.Clamp(_currentSpeed, -_movableEntity.MaxSpeed,

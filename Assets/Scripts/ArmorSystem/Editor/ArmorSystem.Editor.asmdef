@@ -1,0 +1,19 @@
+{
+    "name": "ArmorSystem.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:7166f28495faf7e43862fa59c14983b8",
+        "GUID:343deaaf83e0cee4ca978e7df0b80d21"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

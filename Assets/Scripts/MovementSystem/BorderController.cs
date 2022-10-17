@@ -32,6 +32,8 @@ namespace Controllers.EntityControllers
                 case EntityBorderState.Change:
                     ChangeEntityDirection(entity);
                     break;
+                default:
+                    break;
             }
         }
 
@@ -54,7 +56,7 @@ namespace Controllers.EntityControllers
         private void MoveEntityToAnotherBorder(Transform entityTransform, Vector2 currentDirection)
         {
             var inverseDirection = CalculateInverseDirection(currentDirection, entityTransform.rotation); 
-            entityTransform.position = inverseDirection * _stageDimensions;
+            entityTransform.position = inverseDirection.normalized * _stageDimensions;
         }
 
         private void DestroyEntity(IMovableEntity entity)

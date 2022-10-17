@@ -2,8 +2,8 @@
 {
     public enum ArmorType
     {
-        Static,
-        Direct,
-        Bomb
+        Static = 0,
+        Bullet = 1,
+        Bomb = 2
     }
 }

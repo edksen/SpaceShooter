@@ -9,11 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f6fabfd947447f981d04c0fdb183a2c, type: 3}
-  m_Name: PlayerShipProjectileConfiguration
+  m_Script: {fileID: 11500000, guid: 0b896e6e47d644f08cbe00cf41cb3337, type: 3}
+  m_Name: LightPlayerAmmo
   m_EditorClassIdentifier: 
-  MaxSpeed: 1
-  Inertia: 0
-  LifeTimeSec: 0
-  CooldownRate: 0
-  BorderState: 0
+  ArmorType: 0
+  Projectile: {fileID: 0}
+  AttackRate: 0
+  RechargeRateInSecs: 0
+  AmmoCapacity: 0

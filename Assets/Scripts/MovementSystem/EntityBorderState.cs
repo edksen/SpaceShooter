@@ -2,8 +2,9 @@
 {
     public enum EntityBorderState
     {
-        Destroy,
-        Move,
-        Change
+        None = 0,
+        Destroy = 1,
+        Move = 2,
+        Change = 3
     }
 }

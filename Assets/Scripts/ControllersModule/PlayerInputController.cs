@@ -47,7 +47,7 @@ namespace SpaceShooter.Controllers
         private void OnFire(InputAction.CallbackContext context)
         {
             if(context.phase == InputActionPhase.Started)
-                _shipArmoryController.MakeShot(ArmorType.Direct);
+                _shipArmoryController.MakeShot(ArmorType.Bullet);
         }
 
         private void OnLaser(InputAction.CallbackContext context)

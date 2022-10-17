@@ -123,6 +123,37 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &203369687
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 203369688}
+  m_Layer: 0
+  m_Name: ObjectPool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &203369688
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 203369687}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -7.0460067, y: 7.846678, z: -0.14380538}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &246019398
 GameObject:
   m_ObjectHideFlags: 0
@@ -154,6 +185,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _shipPrefab: {fileID: 2508588392890448075, guid: f36ad014706e36c47875289ab47a4802, type: 3}
   _inputSystem: {fileID: 2051642380}
+  _objectPool: {fileID: 203369688}
+  _aiControllerConfiguration: {fileID: 11400000, guid: f57ea3ccc6ef3b84190125e122ac7487, type: 2}
 --- !u!4 &246019400
 Transform:
   m_ObjectHideFlags: 0

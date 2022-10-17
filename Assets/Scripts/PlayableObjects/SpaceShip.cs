@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using SpaceShooter.ArmorSystem;
 using SpaceShooter.ArmorSystem.Contracts;
+using SpaceShooter.ArmorSystem.Settings;
 using SpaceShooter.Entities;
-using SpaceShooter.GameCore.Configuration;
 using SpaceShooter.MovingSystem;
 using SpaceShooter.MovingSystem.Contracts;
+using SpaceShooter.PlayableObjects.Configuration;
 using UnityEngine;
 
-namespace SpaceShooter.GameCore
+namespace SpaceShooter.PlayableObjects
 {
     public class SpaceShip : MonoBehaviour, IMovableEntity, IArmoredEntity, IDestroyableEntity
     {
@@ -23,23 +24,10 @@ namespace SpaceShooter.GameCore
         public float Inertia => _shipConfiguration.Inertia;
         public float RotationSpeed => _shipConfiguration.RotationSpeed;
         public EntityBorderState BorderState => _shipConfiguration.ShipBorderState;
-        public List<Armor> Armors => _armors;
+        public List<ArmorConfiguration> Armors => _shipConfiguration.ArmorConfigurations;
         public Transform Transform => transform;
         public MonoBehaviour CoroutineRunner => this;
-
-        public void SetArmor(List<Armor> armors)
-        {
-            
-        }
-
-        private void Awake()
-        {
-            _armors = new List<Armor>()
-            {
-                new LightArmor(_shipConfiguration.shipOrdinaryProjectile, _armoryPosition), 
-                new LaserArmor(_shipConfiguration.shipLaserProjectile, _armoryPosition)
-            };
-        }
+        public Transform ArmorTransform => _armoryPosition;
 
         private void OnDestroy()
         {
