@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b896e6e47d644f08cbe00cf41cb3337, type: 3}
   m_Name: EnemyShipArmorConfiguration
   m_EditorClassIdentifier: 
-  ArmorType: 1
+  ArmorType: 2
   Projectile: {fileID: 2675265683028936128, guid: 7f36f42bd8344804aba22ad040af7ec3, type: 3}
   AttackRate: 0
   RechargeRateInSecs: 0

@@ -1,84 +1,50 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using MovementSystem;
-using MovementSystem.Contracts;
 using SpaceShooter.AIModule.Configuration;
 using SpaceShooter.AIModule.Contracts;
-using SpaceShooter.ArmorSystem;
-using SpaceShooter.PlayableObjects;
+using SpaceShooter.AIModule.Entity;
+using Entities;
 using UnityEngine;
-using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
 namespace SpaceShooter.AIModule
 {
     public class AIController : IAIController
     {
-        private readonly HashSet<IAIEntity> _entities;
-        private readonly IBorderController _borderController;
-        private readonly Transform _objectPool;
-        
-        private readonly List<SpaceShip> _chasingEntitiesList;
-        private readonly List<Asteroid> _randomMovingEntitiesList;
+        private readonly HashSet<IAIEntity> _currentlyInstantiatedEntities;
+        private readonly AIEntityFactory _entityFactory;
 
         private readonly int _maxAIEntityType;
+        private readonly float _newEntitySpawnRate;
         private int _maxEntitiesOnPlayground;
-        private readonly int _secsToAddAnotherEntity;
 
-        private float _secsFromGameStart;
-
-        public AIController(
-            IBorderController borderController, 
-            AIControllerConfiguration controllerConfiguration, 
-            Transform objectPool)
+        public AIController(AIControllerConfiguration controllerConfiguration, AIEntityFactory entityFactory)
         {
-            _chasingEntitiesList = controllerConfiguration.ChasingArmoredEntity;
-            _randomMovingEntitiesList = controllerConfiguration.RandomMovingEntity;
             _maxEntitiesOnPlayground = controllerConfiguration.StartMaxEntitiesOnPlayGround;
-            _secsToAddAnotherEntity = controllerConfiguration.SecsToAddEntity;
-            
-            _borderController = borderController;
-            _objectPool = objectPool;
+            _newEntitySpawnRate = controllerConfiguration.SecsToAddEntity;
 
-            _entities = new HashSet<IAIEntity>();
+            _currentlyInstantiatedEntities = new HashSet<IAIEntity>();
             _maxAIEntityType = Enum.GetValues(typeof(AIMovingType)).Cast<int>().Max();
-            _secsFromGameStart = 0f;
+
+            _entityFactory = entityFactory;
+            _entityFactory.SetEntitiesLists(controllerConfiguration.RandomMovingEntity, controllerConfiguration.ChasingArmoredEntity);
         }
 
-        public void Start(Vector2 playerStartPosition)
+        public IEnumerator Start(Vector2 playerStartPosition)
         {
-            FullEntities();
-            ChaseEnemy(playerStartPosition);
-        }
-
-        public void ControllerUpdate()
-        {
-            /*_secsFromGameStart += Time.deltaTime;
-
-            int timeMod = (int) _secsFromGameStart % _secsToAddAnotherEntity;
-            if (timeMod >= 1)
-            {
-                ++_maxEntitiesOnPlayground;
-                _secsFromGameStart = 0;
-                CreateEntity();
-            }*/
+            yield return SpawnEntities();
         }
 
         public void ChaseEnemy(Vector2 enemyPosition)
         {
-            foreach (var entity in _entities)
+            foreach (var entity in _currentlyInstantiatedEntities)
             {
-                if(entity.MovingType == AIMovingType.Chasing)
-                    entity.Run(enemyPosition);
-            }
-        }
-
-        private void FullEntities()
-        {
-            while (_entities.Count < _maxEntitiesOnPlayground)
-            {
-                CreateEntity();
+                if (entity.MovingType == AIMovingType.Chasing)
+                {
+                    entity.SetMovementDirection(enemyPosition);
+                }
             }
         }
 
@@ -86,71 +52,39 @@ namespace SpaceShooter.AIModule
         {
             AIMovingType aiEntityTypeToCreate = (AIMovingType) Random.Range(0, _maxAIEntityType + 1);
 
-            IAIEntity createdEntity = null;
-            switch (aiEntityTypeToCreate)
+            IAIEntity createdEntity = _entityFactory.CreateEntity(aiEntityTypeToCreate);
+            
+            if (createdEntity != null)
             {
-                case AIMovingType.Chasing:
-                    createdEntity = CreateRandomChasingArmoredEntity();
-                    break;
-                case AIMovingType.Random:
-                    createdEntity = CreateRandomMovingEntity();
-                    break;
-                default:
-                    break;
+                _currentlyInstantiatedEntities.Add(createdEntity);
+                createdEntity.Run();
             }
 
-            if (createdEntity != null)
-                _entities.Add(createdEntity);
+            if (createdEntity is IDestroyableEntity destroyableEntity)
+            {
+                destroyableEntity.OnDestroyEntity += () =>
+                {
+                    OnEntityDestroyed(createdEntity);
+                };
+            }
         }
 
-        private IAIEntity CreateRandomMovingEntity()
+        private IEnumerator SpawnEntities()
         {
-            Asteroid entity = Object.Instantiate(_randomMovingEntitiesList[Random.Range(0, _randomMovingEntitiesList.Count - 1)], _objectPool.transform);
-            entity.Transform.position = _borderController.GetRandomPointInBorder();
-            
-            var movingController = new RegularEntityMovementController(entity, _borderController);
-            var armoryController = new EntityArmorController(entity, entity.Armors);
-
-            var randomMovingAIEntity = new AIRandomMovingEntity(movingController, armoryController);
-            entity.OnDestroyEntity += () =>
+            while (true)
             {
-                randomMovingAIEntity.OnAIEntityDestroy();
-                OnEntityDestroyed(randomMovingAIEntity);
-            };
-
-            entity.name += _entities.Count;
-            var directionVector = Random.insideUnitCircle.normalized;
-            
-            Debug.Log($"For entity: {entity.name} setting direction: {directionVector}");
-            
-            movingController.MoveEntity(directionVector);
-
-            return randomMovingAIEntity;
-        }
-
-        private IAIEntity CreateRandomChasingArmoredEntity()
-        {
-            SpaceShip entity = Object.Instantiate(_chasingEntitiesList[Random.Range(0, _chasingEntitiesList.Count - 1)], _objectPool.transform);
-            entity.Transform.position = _borderController.GetRandomPointInBorder();
-            
-            var movingController = new RegularEntityMovementController(entity, _borderController);
-            var armoryController = new EntityArmorController(entity, entity.Armors);
-            var chasingArmoredEntity = new AIChasingArmoredEntity(movingController, armoryController, entity.transform, _objectPool.transform.position);
-
-            entity.OnDestroyEntity += () =>
-            {
-                chasingArmoredEntity.OnAIEntityDestroy();
-                OnEntityDestroyed(chasingArmoredEntity);
-            };
-            
-            return chasingArmoredEntity;
+                yield return new WaitUntil(() => _currentlyInstantiatedEntities.Count < _maxEntitiesOnPlayground);
+                
+                CreateEntity();
+                
+                yield return new WaitForSeconds(_newEntitySpawnRate);
+            }
         }
 
         private void OnEntityDestroyed(IAIEntity destroyedEntity)
         {
-            CreateEntity();
-            if (_entities.Contains(destroyedEntity))
-                _entities.Remove(destroyedEntity);
+            if (_currentlyInstantiatedEntities.Contains(destroyedEntity))
+                _currentlyInstantiatedEntities.Remove(destroyedEntity);
         }
     }
 }

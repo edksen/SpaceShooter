@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b896e6e47d644f08cbe00cf41cb3337, type: 3}
   m_Name: LightPlayerAmmo
   m_EditorClassIdentifier: 
-  ArmorType: 0
-  Projectile: {fileID: 0}
+  ArmorType: 2
+  Projectile: {fileID: 2675265683028936128, guid: f457bae42959e334781b4cee35d73f5b, type: 3}
   AttackRate: 0
   RechargeRateInSecs: 0
   AmmoCapacity: 0

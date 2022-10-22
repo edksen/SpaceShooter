@@ -8,9 +8,9 @@ namespace MovementSystem
 {
     public class InertialEntityMovementController : MovementControllerBase
     {
-        public event Action<Vector2> OnPositionChanged;
+        public override event Action<Vector2> OnPositionChanged;
         
-        private Vector2 _currentDirection;
+        private Vector3 _currentDirection;
         private float _currentSpeed;
 
         public InertialEntityMovementController(IMovableEntity movableEntity, IBorderController borderController)
@@ -29,7 +29,7 @@ namespace MovementSystem
                 CalculateNewPosition();
                 OnPositionChanged?.Invoke(_movableEntity.Transform.position);
                 
-            } while (_currentDirection != Vector2.zero);
+            } while (_currentDirection != Vector3.zero);
 
             TryChangeState(EntityMovingState.Idle);
         }

@@ -1,12 +1,14 @@
-﻿using System;
+﻿using SpaceShooter.ArmorSystem;
 using UnityEngine;
 
 namespace SpaceShooter.AIModule.Contracts
 {
     public interface IAIEntity
     {
+        ArmorType ArmorType { get; }
         AIMovingType MovingType { get; }
-        void Run(Vector2 position);
+        void Run();
+        void SetMovementDirection(Vector2 direction);
         void OnAIEntityDestroy();
     }
 }

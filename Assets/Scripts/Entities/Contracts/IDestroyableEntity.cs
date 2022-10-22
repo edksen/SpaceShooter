@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SpaceShooter.Entities
+namespace Entities
 {
     public interface IDestroyableEntity
     {

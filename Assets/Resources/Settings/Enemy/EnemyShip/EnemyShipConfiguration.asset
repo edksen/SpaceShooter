@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: EnemyShipConfiguration
   m_EditorClassIdentifier: 
   GasForce: 1
-  MaxSpeed: 0.01
-  RotationSpeed: 20
-  Inertia: 0.8
+  MaxSpeed: 1
+  RotationSpeed: 40
+  Inertia: 0
   ShipBorderState: 0
   ArmorConfigurations:
   - {fileID: 11400000, guid: 9518916f91245c84fa60fdd5f19b42e1, type: 2}

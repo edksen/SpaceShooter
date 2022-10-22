@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2379080919769145265}
   - component: {fileID: 4674777500852901498}
   - component: {fileID: 3846144319401457255}
+  - component: {fileID: 1810726924052105817}
   m_Layer: 0
   m_Name: SmallerAsteroid
   m_TagString: Untagged
@@ -98,3 +99,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _projectileConfiguration: {fileID: 11400000, guid: 112616a0c53b7dc4d86ff6e18e31da76, type: 2}
+--- !u!58 &1810726924052105817
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1504699927646949062}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.1062479, y: 0}
+  serializedVersion: 2
+  m_Radius: 2.1406627

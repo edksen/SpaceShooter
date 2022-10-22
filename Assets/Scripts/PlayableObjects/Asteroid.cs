@@ -4,7 +4,7 @@ using MovementSystem;
 using MovementSystem.Contracts;
 using SpaceShooter.ArmorSystem.Contracts;
 using SpaceShooter.ArmorSystem.Settings;
-using SpaceShooter.Entities;
+using Entities;
 using SpaceShooter.PlayableObjects.Configuration;
 using UnityEngine;
 

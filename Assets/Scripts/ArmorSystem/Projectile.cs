@@ -2,7 +2,7 @@
 using MovementSystem;
 using MovementSystem.Contracts;
 using SpaceShooter.ArmorSystem.Settings;
-using SpaceShooter.Entities;
+using Entities;
 using UnityEngine;
 
 namespace SpaceShooter.ArmorSystem
@@ -40,8 +40,14 @@ namespace SpaceShooter.ArmorSystem
         }
 
         private void OnDestroy()
-        {
+        { 
             OnDestroyEntity?.Invoke();
+        }
+
+        private void OnTriggerEnter2D(Collider2D col)
+        {
+            Destroy(col.gameObject);
+            Destroy(gameObject);
         }
     }
 }

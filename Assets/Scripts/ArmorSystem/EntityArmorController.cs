@@ -1,14 +1,14 @@
 ﻿using System.Collections.Generic;
 using SpaceShooter.ArmorSystem.Contracts;
 using SpaceShooter.ArmorSystem.Settings;
-using SpaceShooter.Entities;
+using Entities;
 
 namespace SpaceShooter.ArmorSystem
 {
     public class EntityArmorController : IArmoryController
     {
         private IArmoredEntity _armoredEntity;
-        private List<Armor> _entityArmors;
+        private readonly List<Armor> _entityArmors;
 
         public EntityArmorController(IArmoredEntity armoredEntity, List<ArmorConfiguration> armorConfigurations)
         {

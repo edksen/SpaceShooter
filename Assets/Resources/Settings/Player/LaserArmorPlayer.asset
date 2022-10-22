@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b896e6e47d644f08cbe00cf41cb3337, type: 3}
   m_Name: LaserArmorPlayer
   m_EditorClassIdentifier: 
-  ArmorType: 0
+  ArmorType: 1
   Projectile: {fileID: 2675265683028936128, guid: 8a1c35a690e2b484fa653d6493e55d66, type: 3}
   AttackRate: 1
   RechargeRateInSecs: 30

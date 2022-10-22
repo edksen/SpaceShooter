@@ -4,25 +4,31 @@ using SpaceShooter.ArmorSystem;
 using SpaceShooter.ArmorSystem.Contracts;
 using UnityEngine;
 
-namespace SpaceShooter.AIModule
+namespace SpaceShooter.AIModule.Entity
 {
-    public class AIRandomMovingEntity : IAIEntity
+    public class AIRandomMovingBombEntity : IAIEntity
     {
-        private const AIMovingType MOVING_TYPE = AIMovingType.Random;
-        public AIMovingType MovingType => MOVING_TYPE;
-        
+        public AIMovingType MovingType => AIMovingType.Random;
+        public ArmorType ArmorType => ArmorType.Bomb;
+
         private MovementControllerBase _movementController;
         private IArmoryController _armorController;
-        
-        public AIRandomMovingEntity(MovementControllerBase movementController, IArmoryController armoryController)
+        private Vector2 _movementDirection;
+
+        public AIRandomMovingBombEntity(MovementControllerBase movementController, IArmoryController armoryController)
         {
             _movementController = movementController;
             _armorController = armoryController;
         }
-        
-        public void Run(Vector2 position)
+
+        public void SetMovementDirection(Vector2 direction)
         {
-            _movementController.MoveEntity(position);
+            _movementDirection = direction;
+        }
+        
+        public void Run()
+        {
+            _movementController.MoveEntity(_movementDirection);
         }
 
         public void OnAIEntityDestroy()

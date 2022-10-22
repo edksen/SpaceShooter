@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxSpeed: 0.01
   GasForce: 2
-  RotationSpeed: 10
+  RotationSpeed: -1
   AsteroidBorderState: 3
   ArmorConfiguration: {fileID: 11400000, guid: 6ee774cbdd15a5a44b99543bd12ba676, type: 2}

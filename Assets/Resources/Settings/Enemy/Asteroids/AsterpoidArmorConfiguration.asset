@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b896e6e47d644f08cbe00cf41cb3337, type: 3}
   m_Name: AsterpoidArmorConfiguration
   m_EditorClassIdentifier: 
-  ArmorType: 0
-  Projectile: {fileID: 0}
-  AttackRate: 0
+  ArmorType: 3
+  Projectile: {fileID: 3846144319401457255, guid: dc879d32771c87248891292479cd2b98, type: 3}
+  AttackRate: 3
   RechargeRateInSecs: 0
-  AmmoCapacity: 0
+  AmmoCapacity: 1

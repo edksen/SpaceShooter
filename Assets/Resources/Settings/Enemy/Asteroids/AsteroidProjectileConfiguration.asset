@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f6fabfd947447f981d04c0fdb183a2c, type: 3}
   m_Name: AsteroidProjectileConfiguration
   m_EditorClassIdentifier: 
-  MaxSpeed: 1.5
+  MaxSpeed: 0.01
   Inertia: 0
   LifeTimeSec: 0
   BorderState: 3

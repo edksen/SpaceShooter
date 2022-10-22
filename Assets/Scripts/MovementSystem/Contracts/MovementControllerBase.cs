@@ -1,14 +1,17 @@
-﻿using System.Collections;
-using SpaceShooter.Entities;
+﻿using System;
+using System.Collections;
+using Entities;
 using UnityEngine;
 
 namespace MovementSystem.Contracts
 {
     public abstract class MovementControllerBase
     {
+        public abstract event Action<Vector2> OnPositionChanged;
+        
         protected IMovableEntity _movableEntity;
         protected IBorderController _borderController;
-        protected Vector2 _movementDirection;
+        protected Vector3 _movementDirection;
         
         private Coroutine _movingCoroutine;
         private EntityMovingState _state;
@@ -55,7 +58,7 @@ namespace MovementSystem.Contracts
         {
             if (_movingCoroutine != null)
             {
-                _movableEntity.CoroutineRunner.StopCoroutine(_movingCoroutine);
+                _movableEntity.CoroutineRunner.StopAllCoroutines();
                 _movingCoroutine = null;
             }
             _movableEntity = null;

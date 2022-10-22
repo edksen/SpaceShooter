@@ -29,7 +29,8 @@ namespace ArmorSystem.Editor
             if (armorConfiguration.ArmorType == ArmorType.Static)
                 armorConfiguration.RechargeRateInSecs =
                     EditorGUILayout.FloatField("Recharge rate in secs", armorConfiguration.RechargeRateInSecs);
-
+            
+            EditorUtility.SetDirty(armorConfiguration);
         }
     }
 }

@@ -3,6 +3,7 @@ using MovementSystem.Contracts;
 using SpaceShooter.AIModule;
 using SpaceShooter.AIModule.Configuration;
 using SpaceShooter.AIModule.Contracts;
+using SpaceShooter.AIModule.Entity;
 using SpaceShooter.ArmorSystem;
 using SpaceShooter.ArmorSystem.Contracts;
 using SpaceShooter.Controllers;
@@ -29,18 +30,14 @@ namespace SpaceShooter.GameCore
             InitializeModules();
             var player = CreatePlayer();
             
-            _aiController.Start(player.Transform.position);
-        }
-
-        private void Update()
-        {
-            _aiController.ControllerUpdate();
+            StartCoroutine(_aiController.Start(player.Transform.position));
         }
 
         private void InitializeModules()
         {
             _borderController = new BorderController();
-            _aiController = new AIController(_borderController, _aiControllerConfiguration, _objectPool);
+            var aiEntityFactory = new AIEntityFactory(_objectPool, _borderController);
+            _aiController = new AIController(_aiControllerConfiguration, aiEntityFactory);
         }
 
         private SpaceShip CreatePlayer()
