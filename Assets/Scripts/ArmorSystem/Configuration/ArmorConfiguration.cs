@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using ArmorSystem.Armors;
+using UnityEngine;
 
-namespace SpaceShooter.ArmorSystem.Settings
+namespace ArmorSystem.Settings
 {
     [CreateAssetMenu(fileName = "ArmorConfiguration", menuName = "Armor Configuration Asset", order = 0)]
     public class ArmorConfiguration : ScriptableObject

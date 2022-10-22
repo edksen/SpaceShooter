@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using MovementSystem;
 using MovementSystem.Contracts;
-using SpaceShooter.ArmorSystem.Contracts;
-using SpaceShooter.ArmorSystem.Settings;
+using ArmorSystem.Contracts;
+using ArmorSystem.Settings;
 using Entities;
 using SpaceShooter.PlayableObjects.Configuration;
 using UnityEngine;

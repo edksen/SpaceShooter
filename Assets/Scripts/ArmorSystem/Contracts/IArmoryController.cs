@@ -1,4 +1,6 @@
-﻿namespace SpaceShooter.ArmorSystem.Contracts
+﻿using ArmorSystem.Armors;
+
+namespace ArmorSystem.Contracts
 {
     public interface IArmoryController
     {

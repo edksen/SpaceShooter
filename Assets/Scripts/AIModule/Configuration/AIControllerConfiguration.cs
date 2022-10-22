@@ -2,7 +2,7 @@
 using SpaceShooter.PlayableObjects;
 using UnityEngine;
 
-namespace SpaceShooter.AIModule.Configuration
+namespace AIModule.Configuration
 {
     [CreateAssetMenu(fileName = "AIControllerConfiguration", menuName = "AI Controller Configuration", order = 0)]
     public class AIControllerConfiguration : ScriptableObject

@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
-using SpaceShooter.ArmorSystem.Contracts;
+using ArmorSystem.Contracts;
 using UnityEngine;
 
-namespace SpaceShooter.ArmorSystem
+namespace ArmorSystem.Armors
 {
     public class LaserArmor : Armor
     {

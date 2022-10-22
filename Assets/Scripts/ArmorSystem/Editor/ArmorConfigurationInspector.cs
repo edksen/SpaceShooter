@@ -1,5 +1,5 @@
-﻿using SpaceShooter.ArmorSystem;
-using SpaceShooter.ArmorSystem.Settings;
+﻿using ArmorSystem.Armors;
+using ArmorSystem.Settings;
 using UnityEditor;
 
 namespace ArmorSystem.Editor

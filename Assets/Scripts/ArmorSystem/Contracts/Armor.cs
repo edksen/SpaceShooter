@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using ArmorSystem.Armors;
+using UnityEngine;
 
-namespace SpaceShooter.ArmorSystem.Contracts
+namespace ArmorSystem.Contracts
 {
     public abstract class Armor
     {

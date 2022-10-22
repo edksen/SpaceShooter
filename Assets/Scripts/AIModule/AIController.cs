@@ -2,14 +2,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using SpaceShooter.AIModule.Configuration;
-using SpaceShooter.AIModule.Contracts;
-using SpaceShooter.AIModule.Entity;
+using AIModule.Configuration;
+using AIModule.Contracts;
+using AIModule.Entity;
 using Entities;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace SpaceShooter.AIModule
+namespace AIModule
 {
     public class AIController : IAIController
     {

@@ -1,7 +1,7 @@
-﻿using SpaceShooter.ArmorSystem;
+﻿using ArmorSystem.Armors;
 using UnityEngine;
 
-namespace SpaceShooter.AIModule.Contracts
+namespace AIModule.Contracts
 {
     public interface IAIEntity
     {

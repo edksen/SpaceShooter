@@ -1,9 +1,10 @@
 ﻿using System.ComponentModel;
-using SpaceShooter.ArmorSystem.Contracts;
-using SpaceShooter.ArmorSystem.Settings;
+using ArmorSystem.Armors;
+using ArmorSystem.Contracts;
+using ArmorSystem.Settings;
 using UnityEngine;
 
-namespace SpaceShooter.ArmorSystem
+namespace ArmorSystem
 {
     internal class ArmorFactory
     {

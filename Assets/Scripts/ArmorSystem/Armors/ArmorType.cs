@@ -1,4 +1,4 @@
-﻿namespace SpaceShooter.ArmorSystem
+﻿namespace ArmorSystem.Armors
 {
     public enum ArmorType
     {

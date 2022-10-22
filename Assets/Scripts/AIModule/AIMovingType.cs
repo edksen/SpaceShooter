@@ -1,4 +1,4 @@
-﻿namespace SpaceShooter.AIModule
+﻿namespace AIModule
 {
     public enum AIMovingType
     {

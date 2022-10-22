@@ -4,7 +4,7 @@ using MovementSystem;
 using MovementSystem.Contracts;
 using UnityEngine;
 
-namespace SpaceShooter.AIModule
+namespace AIModule
 {
     public class ChasingEntityMovementController : MovementControllerBase
     {

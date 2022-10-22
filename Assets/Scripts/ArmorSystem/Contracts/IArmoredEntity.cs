@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics;
-using SpaceShooter.ArmorSystem.Settings;
+using ArmorSystem.Settings;
 using UnityEngine;
 
-namespace SpaceShooter.ArmorSystem.Contracts
+namespace ArmorSystem.Contracts
 {
     public interface IArmoredEntity
     {

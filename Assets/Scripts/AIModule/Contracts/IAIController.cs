@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-namespace SpaceShooter.AIModule.Contracts
+namespace AIModule.Contracts
 {
     public interface IAIController
     {

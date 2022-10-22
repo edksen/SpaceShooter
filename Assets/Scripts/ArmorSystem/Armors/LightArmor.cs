@@ -1,10 +1,10 @@
 ﻿using System;
 using MovementSystem;
-using SpaceShooter.ArmorSystem.Contracts;
+using ArmorSystem.Contracts;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace SpaceShooter.ArmorSystem
+namespace ArmorSystem.Armors
 {
     public class LightArmor : Armor
     {

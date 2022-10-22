@@ -1,10 +1,10 @@
 ﻿using System.Collections;
-using SpaceShooter.AIModule.Contracts;
-using SpaceShooter.ArmorSystem;
-using SpaceShooter.ArmorSystem.Contracts;
+using AIModule.Contracts;
+using ArmorSystem.Armors;
+using ArmorSystem.Contracts;
 using UnityEngine;
 
-namespace SpaceShooter.AIModule.Entity
+namespace AIModule.Entity
 {
     public class AIChasingArmoredEntity<T> : IAIEntity where T: MonoBehaviour
     {

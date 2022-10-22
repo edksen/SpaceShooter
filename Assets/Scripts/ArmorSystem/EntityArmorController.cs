@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
-using SpaceShooter.ArmorSystem.Contracts;
-using SpaceShooter.ArmorSystem.Settings;
+using ArmorSystem.Armors;
+using ArmorSystem.Contracts;
+using ArmorSystem.Settings;
 using Entities;
 
-namespace SpaceShooter.ArmorSystem
+namespace ArmorSystem
 {
     public class EntityArmorController : IArmoryController
     {

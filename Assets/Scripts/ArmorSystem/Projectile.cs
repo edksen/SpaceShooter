@@ -1,11 +1,11 @@
 ﻿using System;
 using MovementSystem;
 using MovementSystem.Contracts;
-using SpaceShooter.ArmorSystem.Settings;
+using ArmorSystem.Settings;
 using Entities;
 using UnityEngine;
 
-namespace SpaceShooter.ArmorSystem
+namespace ArmorSystem
 {
     public class Projectile : MonoBehaviour, IMovableEntity, IDestroyableEntity
     {

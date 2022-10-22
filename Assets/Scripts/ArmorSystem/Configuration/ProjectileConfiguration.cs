@@ -1,7 +1,7 @@
 ﻿using MovementSystem;
 using UnityEngine;
 
-namespace SpaceShooter.ArmorSystem.Settings
+namespace ArmorSystem.Settings
 {
     [CreateAssetMenu(fileName = "ProjectileConfiguration", menuName = "Projectile Configuration", order = 1)]
     public class ProjectileConfiguration : ScriptableObject

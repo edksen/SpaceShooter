@@ -1,7 +1,8 @@
-﻿using MovementSystem;
+﻿using ArmorSystem.Contracts;
+using MovementSystem;
 using UnityEngine;
 
-namespace SpaceShooter.ArmorSystem.Contracts
+namespace ArmorSystem.Armors
 {
     public class BombArmor : Armor
     {

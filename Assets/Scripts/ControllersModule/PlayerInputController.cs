@@ -1,10 +1,10 @@
-﻿using MovementSystem.Contracts;
-using SpaceShooter.ArmorSystem;
-using SpaceShooter.ArmorSystem.Contracts;
+﻿using ArmorSystem.Armors;
+using MovementSystem.Contracts;
+using ArmorSystem.Contracts;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace SpaceShooter.Controllers
+namespace Controllers
 {
     public class PlayerInputController
     {

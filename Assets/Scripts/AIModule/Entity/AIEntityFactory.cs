@@ -2,12 +2,12 @@
 using System.ComponentModel;
 using MovementSystem;
 using MovementSystem.Contracts;
-using SpaceShooter.AIModule.Contracts;
-using SpaceShooter.ArmorSystem;
+using AIModule.Contracts;
+using ArmorSystem;
 using SpaceShooter.PlayableObjects;
 using UnityEngine;
 
-namespace SpaceShooter.AIModule.Entity
+namespace AIModule.Entity
 {
     public class AIEntityFactory
     {
