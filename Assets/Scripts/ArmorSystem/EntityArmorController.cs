@@ -1,15 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using ArmorSystem.Armors;
 using ArmorSystem.Contracts;
 using ArmorSystem.Settings;
-using Entities;
 
 namespace ArmorSystem
 {
     public class EntityArmorController : IArmoryController
     {
         private IArmoredEntity _armoredEntity;
-        private readonly List<Armor> _entityArmors;
+        private List<Armor> _entityArmors;
 
         public EntityArmorController(IArmoredEntity armoredEntity, List<ArmorConfiguration> armorConfigurations)
         {
@@ -20,9 +20,6 @@ namespace ArmorSystem
             {
                 _entityArmors.Add(ArmorFactory.Factory.CreateArmor(armor, _armoredEntity.ArmorTransform));
             }
-
-            if (_armoredEntity is IDestroyableEntity destroyableEntity)
-                destroyableEntity.OnDestroyEntity += OnEntityDestroy;
         }
         
         public void MakeShot(ArmorType armorType)
@@ -35,9 +32,21 @@ namespace ArmorSystem
             return _entityArmors.Find(armor => armor.ArmorType == armorType);
         }
 
-        private void OnEntityDestroy()
+        public void OnEntityDestroyed()
         {
+            foreach (var armor in _entityArmors)
+            {
+                armor.OnArmorDestroy();
+            }
+            
+            _entityArmors.Clear();
+            _entityArmors = null;
             _armoredEntity = null;
+        }
+
+        public void SetArmorInfoCallback(ArmorType armorType, Action<int, float> callback)
+        {
+            GetArmor(armorType).SetOnArmorStatusUpdated(callback);
         }
     }
 }

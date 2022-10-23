@@ -7,6 +7,8 @@ namespace AIModule.Contracts
     {
         ArmorType ArmorType { get; }
         AIMovingType MovingType { get; }
+        
+        GameObject EntityObject { get; }
         void Run();
         void SetMovementDirection(Vector2 direction);
         void OnAIEntityDestroy();

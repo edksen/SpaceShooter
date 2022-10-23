@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Collections;
-using Entities;
+using System.Threading;
+using System.Threading.Tasks;
 using UnityEngine;
 
 namespace MovementSystem.Contracts
@@ -8,13 +8,14 @@ namespace MovementSystem.Contracts
     public abstract class MovementControllerBase
     {
         public abstract event Action<Vector2> OnPositionChanged;
-        
+        public virtual float CurrentSpeed => _movableEntity.MaxSpeed;
+        public float EntityRotation => _movableEntity.Transform.rotation.eulerAngles.z;
+
         protected IMovableEntity _movableEntity;
         protected IBorderController _borderController;
         protected Vector3 _movementDirection;
-        
-        private Coroutine _movingCoroutine;
         private EntityMovingState _state;
+        private CancellationTokenSource _tokenSource;
 
         protected MovementControllerBase(IMovableEntity movableEntity, IBorderController borderController)
         {
@@ -23,22 +24,19 @@ namespace MovementSystem.Contracts
             _borderController = borderController;
 
             _movementDirection = Vector2.zero;
-
-            if (_movableEntity is IDestroyableEntity destroyableEntity)
-                destroyableEntity.OnDestroyEntity += OnEntityDestroy;
         }
 
-        public void MoveEntity(Vector2 direction)
+        public virtual void MoveEntity(Vector2 direction)
         {
             _movementDirection = direction;
-            if (_state == EntityMovingState.Idle && TryChangeState(EntityMovingState.Moving))
+            if (TryChangeState(EntityMovingState.Moving))
             {
-                _movingCoroutine = _movableEntity.CoroutineRunner
-                    .StartCoroutine(StartMoving());
+                _tokenSource = new CancellationTokenSource();
+                StartMoving(_tokenSource.Token);
             }
         }
 
-        protected abstract IEnumerator StartMoving();
+        protected abstract Task StartMoving(CancellationToken token);
         protected abstract void CalculateNewPosition();
 
         protected bool TryChangeState(EntityMovingState newState)
@@ -54,15 +52,12 @@ namespace MovementSystem.Contracts
             }
         }
         
-        private void OnEntityDestroy()
+        public void OnEntityDestroyed()
         {
-            if (_movingCoroutine != null)
-            {
-                _movableEntity.CoroutineRunner.StopAllCoroutines();
-                _movingCoroutine = null;
-            }
+            _tokenSource?.Cancel();
             _movableEntity = null;
             _borderController = null;
+            _tokenSource?.Dispose();
         }
     }
 }

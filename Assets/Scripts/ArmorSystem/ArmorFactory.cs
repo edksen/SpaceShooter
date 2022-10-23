@@ -21,7 +21,7 @@ namespace ArmorSystem
                     return new BombArmor(armorConfiguration.Projectile, armoryTransform, armorConfiguration.AttackRate, armorConfiguration.AmmoCapacity);
                 case ArmorType.Bullet:
                     return new LightArmor(armorConfiguration.Projectile, armoryTransform);
-                case ArmorType.Static:
+                case ArmorType.Laser:
                     return new LaserArmor(armorConfiguration.Projectile, armoryTransform, armorConfiguration.AmmoCapacity, armorConfiguration.RechargeRateInSecs);
                 default:
                     throw new InvalidEnumArgumentException(

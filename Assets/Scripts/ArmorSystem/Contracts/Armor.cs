@@ -1,25 +1,51 @@
-﻿using ArmorSystem.Armors;
+﻿using System;
+using ArmorSystem.Armors;
+using Entities;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace ArmorSystem.Contracts
 {
     public abstract class Armor
     {
+        public ArmorType ArmorType => _armorType;
+
+        protected virtual event Action<int, float> _onArmorStatusUpdated;
+        protected PlaygroundObjectObserver ObjectObserver => PlaygroundObjectObserver.Instance;
+        protected abstract int AmmoLeft { get; }
+        protected abstract float AmmoCooldown { get; }
+        protected readonly Transform _armorTransform;
+        protected readonly Projectile _projectile;
+        
         private readonly ArmorType _armorType;
 
-        protected readonly Projectile _projectile;
-        protected readonly Transform _armorTransform;
-
-        public ArmorType ArmorType => _armorType;
-        public abstract int AmmoLeft { get; }
-        
         protected Armor(Projectile projectile, Transform armorTransform, ArmorType armorType)
         {
             _projectile = projectile;
             _armorType = armorType;
             _armorTransform = armorTransform;
         }
+        
+        public void SetOnArmorStatusUpdated(Action<int, float> onArmorStatusUpdated)
+        {
+            _onArmorStatusUpdated += onArmorStatusUpdated;
+            onArmorStatusUpdated.Invoke(AmmoLeft, AmmoCooldown);
+        }
+        
+        public virtual void OnArmorDestroy(){}
 
-        internal abstract void MakeShot();
+        internal virtual void MakeShot()
+        {
+            CreateProjectile();
+        }
+
+        protected virtual Projectile CreateProjectile()
+        {
+            Projectile projectile = Object.Instantiate(_projectile);
+            projectile.Transform.SetPositionAndRotation(_armorTransform.position, _armorTransform.rotation);
+            projectile.OnDestroyCaughtEntity += ObjectObserver.DestroyEntity;
+
+            return projectile;
+        }
     }
 }

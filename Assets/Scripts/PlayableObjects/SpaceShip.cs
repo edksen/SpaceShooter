@@ -17,7 +17,7 @@ namespace SpaceShooter.PlayableObjects
         
         private List<Armor> _armors;
         
-        public event Action OnDestroyEntity;
+        public event Action<GameObject> OnDestroyCaughtEntity;
         public float GasForce => _shipConfiguration.GasForce;
         public float MaxSpeed => _shipConfiguration.MaxSpeed;
         public float Inertia => _shipConfiguration.Inertia;
@@ -25,17 +25,12 @@ namespace SpaceShooter.PlayableObjects
         public EntityBorderState BorderState => _shipConfiguration.ShipBorderState;
         public List<ArmorConfiguration> Armors => _shipConfiguration.ArmorConfigurations;
         public Transform Transform => transform;
-        public MonoBehaviour CoroutineRunner => this;
         public Transform ArmorTransform => _armoryPosition;
-
-        private void OnDestroy()
-        {
-            OnDestroyEntity?.Invoke();
-        }
 
         private void OnTriggerEnter2D(Collider2D col)
         {
-            Destroy(gameObject);
+            OnDestroyCaughtEntity?.Invoke(gameObject);
+            OnDestroyCaughtEntity?.Invoke(col.gameObject);
         }
     }
 }

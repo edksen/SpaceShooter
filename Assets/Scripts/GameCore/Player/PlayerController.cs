@@ -1,26 +1,50 @@
-﻿using ArmorSystem.Armors;
+﻿using System;
+using ArmorSystem.Armors;
 using MovementSystem.Contracts;
 using ArmorSystem.Contracts;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Controllers
+namespace SpaceShooter.GameCore
 {
-    public class PlayerInputController
+    public class PlayerController
     {
         private MovementControllerBase _shipMovementController;
         private IArmoryController _shipArmoryController;
+        private PlayerInput _playerInput;
 
-        public PlayerInputController(
+        public PlayerController(
             MovementControllerBase shipMovementController, 
             IArmoryController shipArmoryController, 
             PlayerInput playerInput)
         {
             _shipMovementController = shipMovementController;
             _shipArmoryController = shipArmoryController;
-            playerInput.onActionTriggered += OnActionTriggered;
+
+            _playerInput = playerInput;
+            _playerInput.onActionTriggered += OnActionTriggered;
         }
 
+        public void SetOnPositionChangeCallback(Action<Vector2, float, float> onPositionChanged)
+        {
+            _shipMovementController.OnPositionChanged += pos => onPositionChanged(pos, _shipMovementController.EntityRotation, _shipMovementController.CurrentSpeed);
+        }
+
+        public void SetOnArmorStatusChangeAction(ArmorType armorType, Action<int, float> onArmorStatusChanged)
+        {
+            _shipArmoryController.SetArmorInfoCallback(armorType, onArmorStatusChanged);
+        }
+
+        public void OnPlayerDestroyed()
+        {
+            _shipArmoryController.OnEntityDestroyed();
+            _shipMovementController.OnEntityDestroyed();
+            _shipArmoryController = null;
+            _shipMovementController = null;
+            _playerInput.onActionTriggered -= OnActionTriggered;
+            _playerInput = null;
+        }
+        
         private void OnActionTriggered(InputAction.CallbackContext context)
         {
             string actionName = context.action.name;
@@ -53,7 +77,7 @@ namespace Controllers
         private void OnLaser(InputAction.CallbackContext context)
         {
             if(context.phase == InputActionPhase.Started)
-                _shipArmoryController.MakeShot(ArmorType.Static);
+                _shipArmoryController.MakeShot(ArmorType.Laser);
         }
     }
 }

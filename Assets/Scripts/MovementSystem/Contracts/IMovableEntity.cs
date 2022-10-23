@@ -10,6 +10,5 @@ namespace MovementSystem.Contracts
         float RotationSpeed { get; }
         Transform Transform { get; }
         EntityBorderState BorderState { get; }
-        MonoBehaviour CoroutineRunner { get; }
     }
 }

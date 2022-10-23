@@ -15,6 +15,8 @@ namespace AIModule.Entity
         private const float SECONDS_TO_NEXT_SHOT = 2f;
         
         public AIMovingType MovingType => MOVING_TYPE;
+
+        public GameObject EntityObject => _aiEntity.gameObject;
         public ArmorType ArmorType => ARMOR_TYPE;
 
         private readonly Vector3 _relativePosition;
@@ -27,12 +29,10 @@ namespace AIModule.Entity
         public AIChasingArmoredEntity(
             ChasingEntityMovementController movementController, 
             IArmoryController armoryController,
-            Vector3 relativePosition,
             T obj)
         {
             _movementController = movementController;
             _armorController = armoryController;
-            _relativePosition = relativePosition;
             _aiEntity = obj;
         }
 
@@ -49,6 +49,8 @@ namespace AIModule.Entity
 
         public void OnAIEntityDestroy()
         {
+            _movementController.OnEntityDestroyed();
+            _armorController.OnEntityDestroyed();
             _movementController = null;
             _armorController = null;
             _aiEntity.StopAllCoroutines();

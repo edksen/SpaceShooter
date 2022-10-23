@@ -1,28 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using MovementSystem;
 using MovementSystem.Contracts;
 using ArmorSystem.Contracts;
 using ArmorSystem.Settings;
-using Entities;
 using SpaceShooter.PlayableObjects.Configuration;
 using UnityEngine;
 
 namespace SpaceShooter.PlayableObjects
 {
-    public class Asteroid : MonoBehaviour, IMovableEntity, IDestroyableEntity, IArmoredEntity
+    public class Asteroid : MonoBehaviour, IMovableEntity, IArmoredEntity
     {
         [SerializeField] private AsteroidConfiguration _asteroidConfiguration;
         private List<ArmorConfiguration> _armorConfigurations;
 
-        public event Action OnDestroyEntity;
         public float GasForce => _asteroidConfiguration.GasForce;
         public float MaxSpeed => _asteroidConfiguration.MaxSpeed;
         public float Inertia => 0;
         public float RotationSpeed => _asteroidConfiguration.RotationSpeed;
         public EntityBorderState BorderState => _asteroidConfiguration.AsteroidBorderState;
         public Transform Transform => transform;
-        public MonoBehaviour CoroutineRunner => this;
 
         public List<ArmorConfiguration> Armors
         {
@@ -36,10 +32,5 @@ namespace SpaceShooter.PlayableObjects
         }
 
         public Transform ArmorTransform => transform;
-
-        private void OnDestroy()
-        {
-            OnDestroyEntity?.Invoke();
-        }
     }
 }

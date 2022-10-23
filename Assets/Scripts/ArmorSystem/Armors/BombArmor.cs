@@ -6,7 +6,8 @@ namespace ArmorSystem.Armors
 {
     public class BombArmor : Armor
     {
-        public override int AmmoLeft => _bombCount;
+        protected override int AmmoLeft => _bombCount;
+        protected override float AmmoCooldown => 0;
         private readonly int _attackRate;
         private int _bombCount;
         
@@ -24,10 +25,16 @@ namespace ArmorSystem.Armors
             --_bombCount;
             for (int i = 0; i < _attackRate; ++i)
             {
-                var projectile = Object.Instantiate(_projectile);
-                projectile.transform.SetPositionAndRotation(_armorTransform.position, _armorTransform.rotation);
+                var projectile = CreateProjectile();
+
                 var movementController = new RegularEntityMovementController(projectile, new BorderController());
                 movementController.MoveEntity(Random.insideUnitCircle.normalized);
+                
+                ObjectObserver.SetOnDestroyAction(projectile.gameObject, () =>
+                {
+                    Object.Destroy(projectile.gameObject);
+                    movementController.OnEntityDestroyed();
+                });
             }
         }
     }

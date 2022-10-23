@@ -1,12 +1,14 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using AIModule.Configuration;
 using AIModule.Contracts;
 using AIModule.Entity;
 using Entities;
 using UnityEngine;
+using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
 namespace AIModule
@@ -20,6 +22,10 @@ namespace AIModule
         private readonly float _newEntitySpawnRate;
         private int _maxEntitiesOnPlayground;
 
+        private CancellationTokenSource _tokenSource;
+        
+        private PlaygroundObjectObserver PlaygroundObjectObserver => PlaygroundObjectObserver.Instance;
+
         public AIController(AIControllerConfiguration controllerConfiguration, AIEntityFactory entityFactory)
         {
             _maxEntitiesOnPlayground = controllerConfiguration.StartMaxEntitiesOnPlayGround;
@@ -32,9 +38,17 @@ namespace AIModule
             _entityFactory.SetEntitiesLists(controllerConfiguration.RandomMovingEntity, controllerConfiguration.ChasingArmoredEntity);
         }
 
-        public IEnumerator Start(Vector2 playerStartPosition)
+        public void Start(Vector2 playerStartPosition)
         {
-            yield return SpawnEntities();
+            _tokenSource = new CancellationTokenSource();
+            SpawnEntities(_tokenSource.Token);
+        }
+
+        public void StopAIController()
+        {
+            _tokenSource?.Cancel();
+            _tokenSource?.Dispose();
+            _currentlyInstantiatedEntities.Clear();
         }
 
         public void ChaseEnemy(Vector2 enemyPosition)
@@ -47,6 +61,23 @@ namespace AIModule
                 }
             }
         }
+        
+        private async Task SpawnEntities(CancellationToken token)
+        {
+            while (!token.IsCancellationRequested)
+            {
+                await Task.Run(() => WaitWhenCanCreate(token));
+                CreateEntity();
+                await Task.Delay((int)(_newEntitySpawnRate * 1000), token);
+            }
+        }
+
+        private Task WaitWhenCanCreate(CancellationToken token)
+        {
+            while (_currentlyInstantiatedEntities.Count >= _maxEntitiesOnPlayground && !token.IsCancellationRequested) { }
+            
+            return Task.CompletedTask;
+        }
 
         private void CreateEntity()
         {
@@ -56,28 +87,14 @@ namespace AIModule
             
             if (createdEntity != null)
             {
+                PlaygroundObjectObserver.SetOnDestroyAction(createdEntity.EntityObject, () =>
+                {
+                    Object.Destroy(createdEntity.EntityObject);
+                    OnEntityDestroyed(createdEntity);
+                });
+                
                 _currentlyInstantiatedEntities.Add(createdEntity);
                 createdEntity.Run();
-            }
-
-            if (createdEntity is IDestroyableEntity destroyableEntity)
-            {
-                destroyableEntity.OnDestroyEntity += () =>
-                {
-                    OnEntityDestroyed(createdEntity);
-                };
-            }
-        }
-
-        private IEnumerator SpawnEntities()
-        {
-            while (true)
-            {
-                yield return new WaitUntil(() => _currentlyInstantiatedEntities.Count < _maxEntitiesOnPlayground);
-                
-                CreateEntity();
-                
-                yield return new WaitForSeconds(_newEntitySpawnRate);
             }
         }
 
@@ -85,6 +102,8 @@ namespace AIModule
         {
             if (_currentlyInstantiatedEntities.Contains(destroyedEntity))
                 _currentlyInstantiatedEntities.Remove(destroyedEntity);
+            
+            destroyedEntity.OnAIEntityDestroy();
         }
     }
 }

@@ -16,3 +16,4 @@ MonoBehaviour:
   Inertia: 0
   LifeTimeSec: 0
   BorderState: 1
+  DestroyOnHit: 1

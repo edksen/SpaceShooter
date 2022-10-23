@@ -10,5 +10,6 @@ namespace ArmorSystem.Settings
         public float Inertia;
         public int LifeTimeSec;
         public EntityBorderState BorderState;
+        public bool DestroyOnHit;
     }
 }

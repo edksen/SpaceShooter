@@ -26,7 +26,7 @@ namespace ArmorSystem.Editor
                     EditorGUILayout.IntField("Attack Rate", armorConfiguration.AttackRate);
             }
 
-            if (armorConfiguration.ArmorType == ArmorType.Static)
+            if (armorConfiguration.ArmorType == ArmorType.Laser)
                 armorConfiguration.RechargeRateInSecs =
                     EditorGUILayout.FloatField("Recharge rate in secs", armorConfiguration.RechargeRateInSecs);
             

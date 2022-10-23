@@ -7,7 +7,6 @@ namespace ArmorSystem.Contracts
     public interface IArmoredEntity
     {
         List<ArmorConfiguration> Armors { get; }
-        
         Transform ArmorTransform { get; }
     }
 }

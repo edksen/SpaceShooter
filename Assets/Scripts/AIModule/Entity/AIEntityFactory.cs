@@ -5,7 +5,8 @@ using MovementSystem.Contracts;
 using AIModule.Contracts;
 using ArmorSystem;
 using SpaceShooter.PlayableObjects;
-using UnityEngine;
+using Object = UnityEngine.Object;
+using Random = UnityEngine.Random;
 
 namespace AIModule.Entity
 {
@@ -14,11 +15,9 @@ namespace AIModule.Entity
         private List<Asteroid> _randomMovingEntitiesPrefabs;
         private List<SpaceShip> _chasingEntitiesPrefabs;
         private readonly IBorderController _borderController;
-        private readonly Transform _objectPool;
 
-        public AIEntityFactory(Transform objectPool, IBorderController borderController)
+        public AIEntityFactory(IBorderController borderController)
         {
-            _objectPool = objectPool;
             _borderController = borderController;
         }
 
@@ -44,19 +43,14 @@ namespace AIModule.Entity
         
         private IAIEntity CreateRandomMovingBombEntity()
         {
-            Asteroid entity = Object.Instantiate(_randomMovingEntitiesPrefabs[Random.Range(0, _randomMovingEntitiesPrefabs.Count - 1)], _objectPool.transform);
+            Asteroid entity = Object.Instantiate(_randomMovingEntitiesPrefabs[Random.Range(0, _randomMovingEntitiesPrefabs.Count - 1)]);
             entity.Transform.position = _borderController.GetRandomPointInBorder();
             
             var movingController = new RegularEntityMovementController(entity, _borderController);
             var armoryController = new EntityArmorController(entity, entity.Armors);
 
-            var randomMovingAIEntity = new AIRandomMovingBombEntity(movingController, armoryController);
-            entity.OnDestroyEntity += () =>
-            {
-                randomMovingAIEntity.OnAIEntityDestroy();
-                armoryController.MakeShot(randomMovingAIEntity.ArmorType);
-            };
-            
+            var randomMovingAIEntity = new AIRandomMovingBombEntity(movingController, armoryController, entity.gameObject);
+
             var directionVector = Random.insideUnitCircle.normalized;
             randomMovingAIEntity.SetMovementDirection(directionVector);
 
@@ -65,18 +59,13 @@ namespace AIModule.Entity
 
         private IAIEntity CreateRandomChasingArmoredEntity()
         {
-            SpaceShip entity = Object.Instantiate(_chasingEntitiesPrefabs[Random.Range(0, _chasingEntitiesPrefabs.Count - 1)], _objectPool.transform);
+            SpaceShip entity = Object.Instantiate(_chasingEntitiesPrefabs[Random.Range(0, _chasingEntitiesPrefabs.Count - 1)]);
             entity.Transform.position = _borderController.GetRandomPointInBorder();
             
             var movingController = new ChasingEntityMovementController(entity, _borderController);
             var armoryController = new EntityArmorController(entity, entity.Armors);
-            var chasingArmoredEntity = new AIChasingArmoredEntity<SpaceShip>(movingController, armoryController, _objectPool.transform.position, entity);
+            var chasingArmoredEntity = new AIChasingArmoredEntity<SpaceShip>(movingController, armoryController, entity);
 
-            entity.OnDestroyEntity += () =>
-            {
-                chasingArmoredEntity.OnAIEntityDestroy();
-            };
-            
             return chasingArmoredEntity;
         }
     }
