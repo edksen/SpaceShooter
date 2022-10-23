@@ -71,7 +71,12 @@ namespace SpaceShooter.GameCore
 
             _player = new Player(_playerShip, playerController, _playerStatusHandler);
             
-            ObjectObserver.SetOnDestroyAction(_playerShip.gameObject, StopGame);
+            ObjectObserver.SetOnDestroyAction(_playerShip.gameObject, OnGameStop);
+        }
+        
+        private void OnGameStop()
+        {
+            _aiController.StopAIController();
         }
 
         private void StartAI()
