@@ -17,10 +17,14 @@ namespace AIModule
     {
         private readonly HashSet<IAIEntity> _currentlyInstantiatedEntities;
         private readonly AIEntityFactory _entityFactory;
-
+        
+        private readonly int _maxEntitiesOnPlaygroundCache;
+        private readonly int _entitiesAmountIncreaseRate;
         private readonly int _maxAIEntityType;
-        private readonly float _newEntitySpawnRate;
+        private readonly int _newEntitySpawnRate;
+        
         private int _maxEntitiesOnPlayground;
+        private int _secondsUntilNewEntity;
 
         private CancellationTokenSource _tokenSource;
         
@@ -28,8 +32,9 @@ namespace AIModule
 
         public AIController(AIControllerConfiguration controllerConfiguration, AIEntityFactory entityFactory)
         {
-            _maxEntitiesOnPlayground = controllerConfiguration.StartMaxEntitiesOnPlayGround;
+            _maxEntitiesOnPlaygroundCache = controllerConfiguration.StartMaxEntitiesOnPlayGround;
             _newEntitySpawnRate = controllerConfiguration.SecsToAddEntity;
+            _entitiesAmountIncreaseRate = controllerConfiguration.EntitiesAmountIncreaseRate;
 
             _currentlyInstantiatedEntities = new HashSet<IAIEntity>();
             _maxAIEntityType = Enum.GetValues(typeof(AIMovingType)).Cast<int>().Max();
@@ -40,15 +45,22 @@ namespace AIModule
 
         public void Start(Vector2 playerStartPosition)
         {
+            _maxEntitiesOnPlayground = _maxEntitiesOnPlaygroundCache;
             _tokenSource = new CancellationTokenSource();
             SpawnEntities(_tokenSource.Token);
+            IncreaseEntitiesCount(_tokenSource.Token);
         }
 
         public void StopAIController()
         {
             _tokenSource?.Cancel();
             _tokenSource?.Dispose();
-            _currentlyInstantiatedEntities.Clear();
+            _tokenSource = null;
+
+            while (_currentlyInstantiatedEntities.Count > 0)
+            {
+                PlaygroundObjectObserver.DestroyEntity(_currentlyInstantiatedEntities.First().EntityObject);
+            }
         }
 
         public void ChaseEnemy(Vector2 enemyPosition)
@@ -68,15 +80,24 @@ namespace AIModule
             {
                 await Task.Run(() => WaitWhenCanCreate(token));
                 CreateEntity();
-                await Task.Delay((int)(_newEntitySpawnRate * 1000), token);
+                _secondsUntilNewEntity = _newEntitySpawnRate;
+                while (_secondsUntilNewEntity > 0)
+                {
+                    await Task.Delay(1000, token);
+                    --_secondsUntilNewEntity;
+                }
             }
         }
 
-        private Task WaitWhenCanCreate(CancellationToken token)
+        private async Task IncreaseEntitiesCount(CancellationToken token)
+        {
+            await Task.Delay(_entitiesAmountIncreaseRate * 1000, token);
+            ++_maxEntitiesOnPlayground;
+        }
+
+        private void WaitWhenCanCreate(CancellationToken token)
         {
             while (_currentlyInstantiatedEntities.Count >= _maxEntitiesOnPlayground && !token.IsCancellationRequested) { }
-            
-            return Task.CompletedTask;
         }
 
         private void CreateEntity()
@@ -104,6 +125,7 @@ namespace AIModule
                 _currentlyInstantiatedEntities.Remove(destroyedEntity);
             
             destroyedEntity.OnAIEntityDestroy();
+            _secondsUntilNewEntity = 0;
         }
     }
 }

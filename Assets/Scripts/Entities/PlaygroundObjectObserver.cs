@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
 namespace Entities
 {
@@ -33,8 +33,18 @@ namespace Entities
         {
             if (_entitiesOnPlayground.ContainsKey(gameObject))
             {
-                _entitiesOnPlayground[gameObject]?.Invoke();
+                Action onDestroy = _entitiesOnPlayground[gameObject];
                 _entitiesOnPlayground.Remove(gameObject);
+                onDestroy?.Invoke();
+            }
+        }
+
+        public void DestroyAllEntities()
+        {
+            while (_entitiesOnPlayground.Count > 0)
+            {
+                GameObject go = _entitiesOnPlayground.First().Key;
+                DestroyEntity(go);
             }
         }
     }

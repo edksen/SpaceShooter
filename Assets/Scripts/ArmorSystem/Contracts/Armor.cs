@@ -11,9 +11,11 @@ namespace ArmorSystem.Contracts
         public ArmorType ArmorType => _armorType;
 
         protected virtual event Action<int, float> _onArmorStatusUpdated;
+        public virtual event Action OnProjectileHit;
+        
         protected PlaygroundObjectObserver ObjectObserver => PlaygroundObjectObserver.Instance;
-        protected abstract int AmmoLeft { get; }
-        protected abstract float AmmoCooldown { get; }
+        protected virtual int AmmoLeft => Int32.MaxValue;
+        protected virtual float AmmoCooldown => 0;
         protected readonly Transform _armorTransform;
         protected readonly Projectile _projectile;
         

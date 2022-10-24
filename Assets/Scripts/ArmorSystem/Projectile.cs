@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace ArmorSystem
 {
-    public class Projectile : MonoBehaviour, IMovableEntity, IDestroyableEntity
+    public class Projectile : MonoBehaviour, IMovableEntity, IDestructibleEntity
     {
         [SerializeField] private ProjectileConfiguration _projectileConfiguration;
 

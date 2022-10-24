@@ -27,6 +27,14 @@ namespace ArmorSystem
             GetArmor(armorType)?.MakeShot();
         }
 
+        public void SetOnProjectileHitAction(Action onProjectileHit)
+        {
+            foreach (var armor in _entityArmors)
+            {
+                armor.OnProjectileHit += onProjectileHit;
+            }
+        }
+
         private Armor GetArmor(ArmorType armorType)
         {
             return _entityArmors.Find(armor => armor.ArmorType == armorType);

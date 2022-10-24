@@ -10,10 +10,8 @@ namespace ArmorSystem.Armors
 {
     public class LightArmor : Armor
     {
-        protected override int AmmoLeft => Int32.MaxValue;
-        protected override float AmmoCooldown => 0;
-        
         private List<MovementControllerBase> _projectileMovementControllers;
+        public override event Action OnProjectileHit;
 
         public LightArmor(Projectile projectile, Transform armorPosition) : base(projectile, armorPosition,
             ArmorType.Bullet)
@@ -29,10 +27,18 @@ namespace ArmorSystem.Armors
             
             _projectileMovementControllers.Add(projectileController);
 
-            projectile.OnDestroyCaughtEntity += ObjectObserver.DestroyEntity;
+            projectile.OnDestroyCaughtEntity += gameObject =>
+            {
+                ObjectObserver.DestroyEntity(gameObject);
+                if(gameObject != projectile.gameObject)
+                    OnProjectileHit?.Invoke();
+            };
+            
             ObjectObserver.SetOnDestroyAction(projectile.gameObject, () =>
             {
-                Object.Destroy(projectile.gameObject);
+                if(projectile)
+                    Object.Destroy(projectile.gameObject);
+                
                 projectileController.OnEntityDestroyed();
                 _projectileMovementControllers.Remove(projectileController);
             });

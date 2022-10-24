@@ -20,14 +20,8 @@ namespace SpaceShooter.GameCore
             _controller.SetOnArmorStatusChangeAction(ArmorType.Laser, _playerStatusHandler.UpdateLaserInfo);
 
             _playerEntity = playerEntity;
-            
-            PlaygroundObjectObserver.Instance.SetOnDestroyAction(_playerEntity.gameObject, OnPlayerStop);
-        }
 
-        public void DestroyPlayer()
-        {
-            if(_playerEntity)
-                PlaygroundObjectObserver.Instance.DestroyEntity(_playerEntity.gameObject);
+            PlaygroundObjectObserver.Instance.SetOnDestroyAction(_playerEntity.gameObject, OnPlayerStop);
         }
 
         private void OnPlayerStop()

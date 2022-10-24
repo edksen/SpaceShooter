@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace SpaceShooter.PlayableObjects
 {
-    public class SpaceShip : MonoBehaviour, IMovableEntity, IArmoredEntity, IDestroyableEntity
+    public class SpaceShip : MonoBehaviour, IMovableEntity, IArmoredEntity, IDestructibleEntity
     {
         [SerializeField] private ShipConfiguration _shipConfiguration;
         [SerializeField] private Transform _armoryPosition;

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f6fabfd947447f981d04c0fdb183a2c, type: 3}
   m_Name: PlayerShipBulletConfiguration
   m_EditorClassIdentifier: 
-  MaxSpeed: 0.1
+  MaxSpeed: 0.25
   Inertia: 0
   LifeTimeSec: 0
   BorderState: 1

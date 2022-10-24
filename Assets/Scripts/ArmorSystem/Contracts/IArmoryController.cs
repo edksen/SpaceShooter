@@ -8,5 +8,6 @@ namespace ArmorSystem.Contracts
         void MakeShot(ArmorType armorType);
         void OnEntityDestroyed();
         void SetArmorInfoCallback(ArmorType armorType, Action<int, float> callback);
+        void SetOnProjectileHitAction(Action onProjectileHit);
     }
 }

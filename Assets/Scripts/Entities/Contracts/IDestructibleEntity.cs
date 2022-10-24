@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Entities
 {
-    public interface IDestroyableEntity
+    public interface IDestructibleEntity
     {
         event Action<GameObject> OnDestroyCaughtEntity;
     }

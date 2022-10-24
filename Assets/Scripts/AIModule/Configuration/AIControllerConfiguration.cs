@@ -11,5 +11,6 @@ namespace AIModule.Configuration
         public List<Asteroid> RandomMovingEntity;
         public int StartMaxEntitiesOnPlayGround;
         public int SecsToAddEntity;
+        public int EntitiesAmountIncreaseRate;
     }
 }

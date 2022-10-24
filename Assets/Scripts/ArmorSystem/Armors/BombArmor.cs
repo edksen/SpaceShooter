@@ -6,8 +6,6 @@ namespace ArmorSystem.Armors
 {
     public class BombArmor : Armor
     {
-        protected override int AmmoLeft => _bombCount;
-        protected override float AmmoCooldown => 0;
         private readonly int _attackRate;
         private int _bombCount;
         

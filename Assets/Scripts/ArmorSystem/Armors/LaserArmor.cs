@@ -10,6 +10,7 @@ namespace ArmorSystem.Armors
     public class LaserArmor : Armor
     {
         protected override event Action<int, float> _onArmorStatusUpdated;
+        public override event Action OnProjectileHit;
 
         protected override int AmmoLeft => _currentShots;
         protected override float AmmoCooldown => _cooldownLeft;
@@ -57,7 +58,12 @@ namespace ArmorSystem.Armors
         protected override Projectile CreateProjectile()
         {
             Projectile projectile = Object.Instantiate(_projectile, _armorTransform);
-            projectile.OnDestroyCaughtEntity += ObjectObserver.DestroyEntity;
+            projectile.OnDestroyCaughtEntity += gameObject =>
+            {
+                ObjectObserver.DestroyEntity(gameObject);
+                if(gameObject != projectile.gameObject)
+                    OnProjectileHit?.Invoke();
+            };
 
             return projectile;
         }
