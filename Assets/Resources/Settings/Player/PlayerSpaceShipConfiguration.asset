@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GasForce: 3
   MaxSpeed: 1
-  RotationSpeed: 360
-  Inertia: 2.12
+  RotationSpeed: 300
+  Inertia: 0.6
   ShipBorderState: 2
   ArmorConfigurations:
   - {fileID: 11400000, guid: 1de59800c037b4d439433dae197f8801, type: 2}
