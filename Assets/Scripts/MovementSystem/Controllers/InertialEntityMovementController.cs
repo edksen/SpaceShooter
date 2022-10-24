@@ -34,7 +34,7 @@ namespace MovementSystem
             do
             {
                 await Task.Delay(FIXED_UPDATE_TIME, token);
-                _currentDirection += _movableEntity.Inertia * Time.fixedDeltaTime * (_movementDirection - _currentDirection);
+                _currentDirection += (1 - _movableEntity.Inertia) * Time.fixedDeltaTime * (_movementDirection - _currentDirection);
                 CalculateNewPosition();
                 OnPositionChanged?.Invoke(_movableEntity.Transform.position);
                 

@@ -17,4 +17,5 @@ MonoBehaviour:
   RandomMovingEntity:
   - {fileID: 4732707810289583745, guid: d3851f20501b93f498fa94bb78e363cd, type: 3}
   StartMaxEntitiesOnPlayGround: 5
-  SecsToAddEntity: 30
+  SecsToAddEntity: 15
+  EntitiesAmountIncreaseRate: 6

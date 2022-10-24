@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PlayerSpaceShipConfiguration
   m_EditorClassIdentifier: 
   GasForce: 3
-  MaxSpeed: 25
+  MaxSpeed: 1
   RotationSpeed: 360
   Inertia: 2.12
   ShipBorderState: 2

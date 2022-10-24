@@ -11,7 +11,7 @@ namespace SpaceShooter.PlayableObjects.Configuration
         public float GasForce;
         public float MaxSpeed;
         public float RotationSpeed;
-        public float Inertia;
+        [Range(0, 1)] public float Inertia;
         public EntityBorderState ShipBorderState;
 
         public List<ArmorConfiguration> ArmorConfigurations;
