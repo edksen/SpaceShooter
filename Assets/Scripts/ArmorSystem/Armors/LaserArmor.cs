@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using ArmorSystem.Contracts;
+using Entities;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -23,8 +24,8 @@ namespace ArmorSystem.Armors
         private bool _recharging;
         private CancellationTokenSource _tokenSource;
 
-        public LaserArmor(Projectile projectile, Transform armoryPosition, int maxShots, float cooldownRate) : base(
-            projectile, armoryPosition, ArmorType.Laser)
+        public LaserArmor(Projectile projectile, Transform armoryPosition, int maxShots, float cooldownRate, PlaygroundObjectObserver objectObserver) 
+            : base(projectile, armoryPosition, ArmorType.Laser, objectObserver)
         {
             _maxShots = maxShots;
             _currentShots = _maxShots;
@@ -60,7 +61,7 @@ namespace ArmorSystem.Armors
             Projectile projectile = Object.Instantiate(_projectile, _armorTransform);
             projectile.OnDestroyCaughtEntity += gameObject =>
             {
-                ObjectObserver.DestroyEntity(gameObject);
+                _objectObserver.DestroyEntity(gameObject);
                 if(gameObject != projectile.gameObject)
                     OnProjectileHit?.Invoke();
             };

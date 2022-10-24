@@ -30,7 +30,8 @@ namespace SpaceShooter.GameCore
 
         private MainMenuHandler _mainMenuHandler;
         
-        private PlaygroundObjectObserver ObjectObserver => PlaygroundObjectObserver.Instance;
+        private PlaygroundObjectObserver _objectObserver;
+        private ArmorFactory _armorFactory;
 
         public SpaceShooterGameCore(
             SpaceShip shipPrefab, 
@@ -42,15 +43,17 @@ namespace SpaceShooter.GameCore
             _inputSystem = playerInput;
             _aiControllerConfiguration = aiControllerConfiguration;
             _playerStatusHandler = statusHandler;
+            _objectObserver = new PlaygroundObjectObserver();
         }
         
         public void InitializeModules(MainMenu mainMenu)
         {
+            _armorFactory = new ArmorFactory(_objectObserver);
             _playerScore = new Score();
 
             _borderController = new BorderController();
             
-            _aiController = new AIController(_aiControllerConfiguration, new AIEntityFactory(_borderController));
+            _aiController = new AIController(_aiControllerConfiguration, new AIEntityFactory(_borderController, _armorFactory), _objectObserver);
             
             InitMainMenu(mainMenu);
         }
@@ -58,7 +61,7 @@ namespace SpaceShooter.GameCore
         public void StopGame()
         {
             if(_playerShip)
-                ObjectObserver.DestroyEntity(_playerShip.gameObject);
+                _objectObserver.DestroyEntity(_playerShip.gameObject);
         }
 
         private void InitMainMenu(MainMenu mainMenu)
@@ -80,19 +83,19 @@ namespace SpaceShooter.GameCore
         private void CreatePlayer()
         {
             _playerShip = Object.Instantiate(_shipPrefab);
-            _playerShip.OnDestroyCaughtEntity += ObjectObserver.DestroyEntity;
+            _playerShip.OnDestroyCaughtEntity += _objectObserver.DestroyEntity;
             
             InertialEntityMovementController movementController = new InertialEntityMovementController(_playerShip, _borderController);
             movementController.OnPositionChanged += _aiController.ChaseEnemy;
             
-            IArmoryController armoryController = new EntityArmorController(_playerShip, _playerShip.Armors);
+            IArmoryController armoryController = new EntityArmorController(_playerShip, _playerShip.Armors, _armorFactory);
             armoryController.SetOnProjectileHitAction(UpdateScore);
             
             var playerController = new PlayerController(movementController, armoryController, _inputSystem);
 
-            _player = new Player(_playerShip, playerController, _playerStatusHandler);
+            _player = new Player(_playerShip, playerController, _playerStatusHandler, _objectObserver);
 
-            ObjectObserver.SetOnDestroyAction(_playerShip.gameObject, OnGameStop);
+            _objectObserver.SetOnDestroyAction(_playerShip.gameObject, OnGameStop);
         }
         
         private void OnGameStop()
@@ -100,7 +103,7 @@ namespace SpaceShooter.GameCore
             _mainMenuHandler.UpdateScore(_playerScore.CurrentScore);
             _playerScore.ResetScore();
             _aiController.StopAIController();
-            ObjectObserver.DestroyAllEntities();
+            _objectObserver.DestroyAllEntities();
             _playerStatusHandler.gameObject.SetActive(false);
             _mainMenuHandler.ShowMainMenu();
         }

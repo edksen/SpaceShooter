@@ -11,14 +11,14 @@ namespace ArmorSystem
         private IArmoredEntity _armoredEntity;
         private List<Armor> _entityArmors;
 
-        public EntityArmorController(IArmoredEntity armoredEntity, List<ArmorConfiguration> armorConfigurations)
+        public EntityArmorController(IArmoredEntity armoredEntity, List<ArmorConfiguration> armorConfigurations, ArmorFactory armorFactory)
         {
             _armoredEntity = armoredEntity;
             _entityArmors = new List<Armor>(armorConfigurations.Count);
 
             foreach (var armor in armorConfigurations)
             {
-                _entityArmors.Add(ArmorFactory.Factory.CreateArmor(armor, _armoredEntity.ArmorTransform));
+                _entityArmors.Add(armorFactory.CreateArmor(armor, _armoredEntity.ArmorTransform));
             }
         }
         

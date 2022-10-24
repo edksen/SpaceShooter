@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using MovementSystem;
 using ArmorSystem.Contracts;
+using Entities;
 using MovementSystem.Contracts;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -13,8 +14,8 @@ namespace ArmorSystem.Armors
         private List<MovementControllerBase> _projectileMovementControllers;
         public override event Action OnProjectileHit;
 
-        public LightArmor(Projectile projectile, Transform armorPosition) : base(projectile, armorPosition,
-            ArmorType.Bullet)
+        public LightArmor(Projectile projectile, Transform armorPosition, PlaygroundObjectObserver objectObserver) 
+            : base(projectile, armorPosition, ArmorType.Bullet, objectObserver)
         {
             _projectileMovementControllers = new List<MovementControllerBase>();
         }
@@ -29,12 +30,12 @@ namespace ArmorSystem.Armors
 
             projectile.OnDestroyCaughtEntity += gameObject =>
             {
-                ObjectObserver.DestroyEntity(gameObject);
+                _objectObserver.DestroyEntity(gameObject);
                 if(gameObject != projectile.gameObject)
                     OnProjectileHit?.Invoke();
             };
             
-            ObjectObserver.SetOnDestroyAction(projectile.gameObject, () =>
+            _objectObserver.SetOnDestroyAction(projectile.gameObject, () =>
             {
                 if(projectile)
                     Object.Destroy(projectile.gameObject);

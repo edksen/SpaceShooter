@@ -1,4 +1,5 @@
 ﻿using ArmorSystem.Contracts;
+using Entities;
 using MovementSystem;
 using UnityEngine;
 
@@ -9,7 +10,8 @@ namespace ArmorSystem.Armors
         private readonly int _attackRate;
         private int _bombCount;
         
-        public BombArmor(Projectile projectile, Transform armorTransform, int attackRate, int ammoCapacity) : base(projectile, armorTransform, ArmorType.Bomb)
+        public BombArmor(Projectile projectile, Transform armorTransform, int attackRate, int ammoCapacity, PlaygroundObjectObserver objectObserver) 
+            : base(projectile, armorTransform, ArmorType.Bomb, objectObserver)
         {
             _bombCount = ammoCapacity;
             _attackRate = attackRate;
@@ -28,7 +30,7 @@ namespace ArmorSystem.Armors
                 var movementController = new RegularEntityMovementController(projectile, new BorderController());
                 movementController.MoveEntity(Random.insideUnitCircle.normalized);
                 
-                ObjectObserver.SetOnDestroyAction(projectile.gameObject, () =>
+                _objectObserver.SetOnDestroyAction(projectile.gameObject, () =>
                 {
                     Object.Destroy(projectile.gameObject);
                     movementController.OnEntityDestroyed();

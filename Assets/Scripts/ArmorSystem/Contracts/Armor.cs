@@ -13,7 +13,7 @@ namespace ArmorSystem.Contracts
         protected virtual event Action<int, float> _onArmorStatusUpdated;
         public virtual event Action OnProjectileHit;
         
-        protected PlaygroundObjectObserver ObjectObserver => PlaygroundObjectObserver.Instance;
+        protected PlaygroundObjectObserver _objectObserver;
         protected virtual int AmmoLeft => Int32.MaxValue;
         protected virtual float AmmoCooldown => 0;
         protected readonly Transform _armorTransform;
@@ -21,11 +21,12 @@ namespace ArmorSystem.Contracts
         
         private readonly ArmorType _armorType;
 
-        protected Armor(Projectile projectile, Transform armorTransform, ArmorType armorType)
+        protected Armor(Projectile projectile, Transform armorTransform, ArmorType armorType, PlaygroundObjectObserver objectObserver)
         {
             _projectile = projectile;
             _armorType = armorType;
             _armorTransform = armorTransform;
+            _objectObserver = objectObserver;
         }
         
         public void SetOnArmorStatusUpdated(Action<int, float> onArmorStatusUpdated)
@@ -45,7 +46,7 @@ namespace ArmorSystem.Contracts
         {
             Projectile projectile = Object.Instantiate(_projectile);
             projectile.Transform.SetPositionAndRotation(_armorTransform.position, _armorTransform.rotation);
-            projectile.OnDestroyCaughtEntity += ObjectObserver.DestroyEntity;
+            projectile.OnDestroyCaughtEntity += _objectObserver.DestroyEntity;
 
             return projectile;
         }

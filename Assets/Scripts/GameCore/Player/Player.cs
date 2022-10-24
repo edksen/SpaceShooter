@@ -11,7 +11,10 @@ namespace SpaceShooter.GameCore
         private PlayerStatusHandler _playerStatusHandler;
         private SpaceShip _playerEntity;
 
-        public Player(SpaceShip playerEntity, PlayerController playerController, PlayerStatusHandler playerStatusHandler)
+        public Player(SpaceShip playerEntity, 
+            PlayerController playerController, 
+            PlayerStatusHandler playerStatusHandler, 
+            PlaygroundObjectObserver objectObserver)
         {
             _controller = playerController;
             _playerStatusHandler = playerStatusHandler;
@@ -20,8 +23,8 @@ namespace SpaceShooter.GameCore
             _controller.SetOnArmorStatusChangeAction(ArmorType.Laser, _playerStatusHandler.UpdateLaserInfo);
 
             _playerEntity = playerEntity;
-
-            PlaygroundObjectObserver.Instance.SetOnDestroyAction(_playerEntity.gameObject, OnPlayerStop);
+            
+            objectObserver.SetOnDestroyAction(_playerEntity.gameObject, OnPlayerStop);
         }
 
         private void OnPlayerStop()

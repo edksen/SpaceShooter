@@ -28,9 +28,9 @@ namespace AIModule
 
         private CancellationTokenSource _tokenSource;
         
-        private PlaygroundObjectObserver PlaygroundObjectObserver => PlaygroundObjectObserver.Instance;
+        private PlaygroundObjectObserver _playgroundObjectObserver;
 
-        public AIController(AIControllerConfiguration controllerConfiguration, AIEntityFactory entityFactory)
+        public AIController(AIControllerConfiguration controllerConfiguration, AIEntityFactory entityFactory, PlaygroundObjectObserver objectObserver)
         {
             _maxEntitiesOnPlaygroundCache = controllerConfiguration.StartMaxEntitiesOnPlayGround;
             _newEntitySpawnRate = controllerConfiguration.SecsToAddEntity;
@@ -41,6 +41,8 @@ namespace AIModule
 
             _entityFactory = entityFactory;
             _entityFactory.SetEntitiesLists(controllerConfiguration.RandomMovingEntity, controllerConfiguration.ChasingArmoredEntity);
+
+            _playgroundObjectObserver = objectObserver;
         }
 
         public void Start(Vector2 playerStartPosition)
@@ -59,7 +61,7 @@ namespace AIModule
 
             while (_currentlyInstantiatedEntities.Count > 0)
             {
-                PlaygroundObjectObserver.DestroyEntity(_currentlyInstantiatedEntities.First().EntityObject);
+                _playgroundObjectObserver.DestroyEntity(_currentlyInstantiatedEntities.First().EntityObject);
             }
         }
 
@@ -108,7 +110,7 @@ namespace AIModule
             
             if (createdEntity != null)
             {
-                PlaygroundObjectObserver.SetOnDestroyAction(createdEntity.EntityObject, () =>
+                _playgroundObjectObserver.SetOnDestroyAction(createdEntity.EntityObject, () =>
                 {
                     Object.Destroy(createdEntity.EntityObject);
                     OnEntityDestroyed(createdEntity);

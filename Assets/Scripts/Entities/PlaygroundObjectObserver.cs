@@ -7,12 +7,9 @@ namespace Entities
 {
     public class PlaygroundObjectObserver
     {
-        public static PlaygroundObjectObserver Instance => _instance ??= new PlaygroundObjectObserver();
-        private static PlaygroundObjectObserver _instance;
-
         private readonly Dictionary<GameObject, Action> _entitiesOnPlayground;
 
-        private PlaygroundObjectObserver()
+        public PlaygroundObjectObserver()
         {
             _entitiesOnPlayground = new Dictionary<GameObject, Action>();
         }
